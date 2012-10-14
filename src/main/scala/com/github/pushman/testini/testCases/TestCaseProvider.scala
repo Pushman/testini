@@ -13,10 +13,14 @@ class TestCaseProvider(testClass: TestClass) {
       def kits = List()
 
       def method = testMethods.get(0)
+
+      def isParameterised = false
     }, new TestCase {
       def kits = List(new TestKitData(List("foo", "FOO")))
 
       def method = testMethods.get(1)
+
+      def isParameterised = true
     })
   }
 

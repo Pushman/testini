@@ -16,4 +16,6 @@ case class TestCaseData(@BeanProperty var testKits: java.util.List[TestKitData])
   override def kits = testKits
 
   def method = null
+
+  def isParameterised = true
 }

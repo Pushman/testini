@@ -2,14 +2,7 @@ package com.github.pushman.testini.data
 
 import org.junit.runners.model.FrameworkMethod
 
-trait TestCase {
-
-  def method: FrameworkMethod
-
-  def kits: Seq[TestKit]
-}
-
-object TestCaseHelper {
+object TestCase {
 
   implicit def extendTestCasesSeq(testCases: Seq[TestCase]): ExtendedTestCasesSeq = {
     new ExtendedTestCasesSeq(testCases)
@@ -20,11 +13,11 @@ object TestCaseHelper {
     def extractFrameworkMethods =
       testCases.flatMap(extractMethod)
 
-    def extractMethod(testCase: TestCase): Seq[FrameworkMethod] = {
-      if (testCase.kits.isEmpty)
-        List(testCase.method)
-      else
+    private def extractMethod(testCase: TestCase): Seq[FrameworkMethod] = {
+      if (testCase.isParameterised)
         for (i <- testCase.kits) yield testCase.method
+      else
+        List(testCase.method)
     }
 
     def findMethod(method: FrameworkMethod) = {
@@ -34,4 +27,22 @@ object TestCaseHelper {
       }
     }
   }
+}
+
+trait TestCase {
+  def method: FrameworkMethod
+
+  def kits: Seq[TestKit]
+
+  def isParameterised: Boolean
+}
+
+case class NoArgTestCase(method: FrameworkMethod) extends TestCase {
+  def kits = List.empty
+
+  def isParameterised = false
+}
+
+case class ParameterisedTestCase(method: FrameworkMethod, kits: Seq[TestKit]) extends TestCase {
+  def isParameterised = true
 }
