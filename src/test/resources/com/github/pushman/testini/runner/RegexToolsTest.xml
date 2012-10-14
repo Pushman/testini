@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:test="http://pushman.github.com/schema/test"
+       xmlns:testproperties="http://pushman.github.com/schema/testproperties"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://pushman.github.com/schema/test http://pushman.github.com/schema/test.xsd
+       http://pushman.github.com/schema/testproperties http://pushman.github.com/schema/testproperties.xsd
+       ">
+
+    <bean id="hello" class="com.github.pushman.testini.xml.XMLTestSuite">
+        <testproperties:set name="cases">
+            <test:case>
+                <test:kit id="shouldQuoteAsciiQuery">
+                    <value>abcd 123 ,/.</value>
+                    <value>\Qabcd 123 ,/.\E</value>
+                </test:kit>
+                <test:kit id="shouldUpperAndLowerCaseUnicodeCharacters">
+                    <value>Łódź abc 123 ,/.</value>
+                    <value>[łŁ][óÓ]\Qd\E[źŹ]\Q abc 123 ,/.\E</value>
+                </test:kit>
+            </test:case>
+        </testproperties:set>
+    </bean>
+</beans>

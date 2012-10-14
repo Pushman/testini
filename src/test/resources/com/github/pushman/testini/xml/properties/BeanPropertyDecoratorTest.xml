@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:testproperties="http://pushman.github.com/schema/testproperties"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://pushman.github.com/schema/testproperties http://pushman.github.com/schema/testproperties.xsd
+       ">
+
+    <bean id="simpleEntity" class="com.github.pushman.testini.test.TestEntity">
+        <testproperties:name name="name" que="entity name"/>
+        <testproperties:set name="itemsAsSet">
+            <value>second name</value>
+            <value>first name</value>
+        </testproperties:set>
+        <testproperties:list name="itemsAsList">
+            <value>first name</value>
+            <value>second name</value>
+        </testproperties:list>
+    </bean>
+
+    <bean id="entityWithReferenceInCollection" class="com.github.pushman.testini.test.TestEntity">
+        <testproperties:name name="name" que="entity name"/>
+        <testproperties:set name="itemsAsSet">
+            <value>first name</value>
+            <ref bean="someStringBean"/>
+        </testproperties:set>
+    </bean>
+
+    <bean id="someStringBean" class="java.lang.String">
+        <constructor-arg value="string bean content"/>
+    </bean>
+</beans>
