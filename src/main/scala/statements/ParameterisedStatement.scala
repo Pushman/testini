@@ -1,11 +1,11 @@
 package statements
 
-import org.junit.runners.model.Statement
-import com.github.pushman.testini.methods.ParameterisedMethod
+import org.junit.runners.model.{FrameworkMethod, Statement}
+import com.github.pushman.testini.data.TestKit
 
-class ParameterisedStatement(parameterisedMethod: ParameterisedMethod, testTarget: Any) extends Statement {
+class ParameterisedStatement(val testMethod: FrameworkMethod, val kit: TestKit, testTarget: Any) extends Statement {
 
   def evaluate() {
-    parameterisedMethod.run(testTarget)
+    testMethod.invokeExplosively(testTarget, kit.data: _*)
   }
 }

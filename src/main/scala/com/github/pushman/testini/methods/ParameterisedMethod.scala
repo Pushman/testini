@@ -14,7 +14,6 @@ class ParameterisedMethod(val testMethod: FrameworkMethod, val kit: TestKit) {
 
   def run(testTarget: Any) {
     if (hasParameters) {
-      testMethod.invokeExplosively(testTarget, kit.data: _*)
     } else {
       testMethod.invokeExplosively(testTarget)
     }

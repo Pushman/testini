@@ -13,6 +13,9 @@ object TestCase {
     def extractFrameworkMethods =
       testCases.flatMap(extractMethod)
 
+    def toKitsMap =
+      testCases.map(t => (t.method, t.kits.iterator)).toMap
+
     private def extractMethod(testCase: TestCase): Seq[FrameworkMethod] = {
       if (testCase.isParameterised)
         for (i <- testCase.kits) yield testCase.method
