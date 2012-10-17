@@ -16,7 +16,7 @@ class TestCaseProvider(testClass: TestClass) {
 
       def isParameterised = false
     }, new TestCase {
-      def kits = List(new TestKitData(List("foo", "FOO")), new TestKitData(List("asdfs", "ASDF")))
+      def kits = List(new TestKitData(List("foo", "FOO")), new TestKitData(List("asdf", "ASDF")))
 
       def method = testMethods.get(1)
 

@@ -2,36 +2,6 @@ package com.github.pushman.testini.data
 
 import org.junit.runners.model.FrameworkMethod
 
-object TestCase {
-
-  implicit def extendTestCasesSeq(testCases: Seq[TestCase]): ExtendedTestCasesSeq = {
-    new ExtendedTestCasesSeq(testCases)
-  }
-
-  class ExtendedTestCasesSeq(testCases: Seq[TestCase]) {
-
-    def extractFrameworkMethods =
-      testCases.flatMap(extractMethod)
-
-    def toKitsMap =
-      testCases.map(t => (t.method, t.kits.iterator)).toMap
-
-    private def extractMethod(testCase: TestCase): Seq[FrameworkMethod] = {
-      if (testCase.isParameterised)
-        for (i <- testCase.kits) yield testCase.method
-      else
-        List(testCase.method)
-    }
-
-    def findMethod(method: FrameworkMethod) = {
-      testCases.find(method == _.method) match {
-        case Some(testCase) => testCase
-        case None => throw new NoSuchElementException("TestCase with method " + method + " not found")
-      }
-    }
-  }
-}
-
 trait TestCase {
   def method: FrameworkMethod
 

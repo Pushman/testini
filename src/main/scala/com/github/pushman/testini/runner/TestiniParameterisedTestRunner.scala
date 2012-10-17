@@ -46,7 +46,7 @@ class TestiniParameterisedTestRunner(testCases: Seq[TestCase], descriptionProvid
     testKitsForMethods get method match {
       case Some(executedTestCase) =>
         executedTestCase.moveToNextKit()
-      case None => ;
+      case None =>
     }
   }
 }
