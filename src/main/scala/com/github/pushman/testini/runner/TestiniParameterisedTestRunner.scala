@@ -4,7 +4,7 @@ import org.junit.runners.model.{Statement, FrameworkMethod}
 import com.github.pushman.testini.data.TestCase
 import com.github.pushman.testini.descriptions.TestDescriptionProvider
 import org.junit.runner.Description
-import statements.ParameterisedStatement
+import com.github.pushman.testini.statements.ParameterisedStatement
 
 case class ExecutedTestKitHolder(testCase: TestCase) {
   private val iterator = testCase.kits.iterator

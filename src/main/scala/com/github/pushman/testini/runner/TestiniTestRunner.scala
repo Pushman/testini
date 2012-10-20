@@ -17,16 +17,16 @@ class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
   private lazy val testCaseValidator = new TestCaseValidator
   private lazy val descriptionProvider = new TestDescriptionProvider(getTestClass)
   private lazy val testCaseProvider = new TestCaseProvider(getTestClass)
-  private lazy val testMethods = new TestMethodsProvider
+  private lazy val testMethodsProvider = new TestMethodsProvider
 
   private lazy val testCases = testCaseProvider.testCases
 
   private lazy val parameterisedTestRunner = new TestiniParameterisedTestRunner(testCases, descriptionProvider)
 
   override def computeTestMethods =
-    testMethods.computeTestMethods(testCases)
+    testMethodsProvider.computeTestMethods(testCases)
 
-  override def getDescription: Description =
+  override val getDescription: Description =
     descriptionProvider.describeTest(testCases)
 
   override def validateTestMethods(errors: util.List[Throwable]) {

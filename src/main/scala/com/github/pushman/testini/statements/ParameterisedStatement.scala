@@ -1,4 +1,4 @@
-package statements
+package com.github.pushman.testini.statements
 
 import org.junit.runners.model.{FrameworkMethod, Statement}
 import com.github.pushman.testini.data.TestKit
