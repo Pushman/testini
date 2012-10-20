@@ -8,15 +8,14 @@ import com.github.pushman.testini.descriptions.TestDescriptionProvider
 import java.util
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.validation.TestCaseValidator
-import com.github.pushman.testini.testCases.TestCaseProvider
-import com.github.pushman.testini.data.TestCase
+import com.github.pushman.testini.testCases.ReflectionTestCaseProvider
 import com.github.pushman.testini.methods.TestMethodsProvider
 
 class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
 
   private lazy val testCaseValidator = new TestCaseValidator
   private lazy val descriptionProvider = new TestDescriptionProvider(getTestClass)
-  private lazy val testCaseProvider = new TestCaseProvider(getTestClass)
+  private lazy val testCaseProvider = new ReflectionTestCaseProvider(getTestClass)
   private lazy val testMethodsProvider = new TestMethodsProvider
 
   private lazy val testCases = testCaseProvider.testCases
