@@ -19,28 +19,24 @@ case class ExecutedTestKitHolder(testCase: TestCase) {
 
 class TestiniParameterisedTestRunner(testCases: Seq[TestCase], descriptionProvider: TestDescriptionProvider) {
 
-  val testKitsForMethods: Map[FrameworkMethod, ExecutedTestKitHolder] = {
+  val testKitsForMethods: Map[FrameworkMethod, ExecutedTestKitHolder] =
     testCases.filter(_.isParameterised).map(t => (t.method, new ExecutedTestKitHolder(t))).toMap
-  }
 
-  def descriptionForTestCase(method: FrameworkMethod): Description = {
+  def descriptionForTestCase(method: FrameworkMethod): Description =
     testKitsForMethods get method match {
       case Some(testKitHolder) =>
         descriptionProvider.describeTestKit(testKitHolder.currentTestKit)
       case None =>
         descriptionProvider.describeMethod(method)
     }
-  }
 
-  def methodInvoker(method: FrameworkMethod, testTarget: Any): Option[Statement] = {
+  def methodInvoker(method: FrameworkMethod, testTarget: Any): Option[Statement] =
     testKitsForMethods get method match {
-      case Some(executedTestCase) => {
+      case Some(executedTestCase) =>
         Some(new ParameterisedStatement(method, executedTestCase.currentTestKit, testTarget))
-      }
       case None =>
         None
     }
-  }
 
   def notifyMethodInvoked(method: FrameworkMethod) {
     testKitsForMethods get method match {
