@@ -8,14 +8,15 @@ import com.github.pushman.testini.descriptions.TestDescriptionProvider
 import java.util
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.validation.TestCaseValidator
-import com.github.pushman.testini.testCases.ReflectionTestCaseProvider
 import com.github.pushman.testini.methods.TestMethodsProvider
+import com.github.pushman.testini.testCases.{AnnotationTestCaseProvider, MethodReflectionTestKitsProvider}
 
 class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
 
   private lazy val testCaseValidator = new TestCaseValidator
   private lazy val descriptionProvider = new TestDescriptionProvider(getTestClass)
-  private lazy val testCaseProvider = new ReflectionTestCaseProvider(getTestClass)
+  private lazy val testCaseProvider = new AnnotationTestCaseProvider(getTestClass,
+    List(MethodReflectionTestKitsProvider))
   private lazy val testMethodsProvider = new TestMethodsProvider
 
   private lazy val testCases = testCaseProvider.testCases
@@ -35,7 +36,7 @@ class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
   override def describeChild(method: FrameworkMethod) =
     parameterisedTestRunner.descriptionForTestCase(method)
 
-  override def methodInvoker(method: FrameworkMethod, testTarget: Any) = {
+  override def methodInvoker(method: FrameworkMethod, testTarget: Any) =
     parameterisedTestRunner.methodInvoker(method, testTarget) match {
       case Some(invoker) => {
         parameterisedTestRunner.notifyMethodInvoked(method)
@@ -43,5 +44,4 @@ class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
       }
       case None => super.methodInvoker(method, testTarget)
     }
-  }
 }

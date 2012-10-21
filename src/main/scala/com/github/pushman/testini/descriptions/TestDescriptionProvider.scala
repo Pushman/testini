@@ -19,14 +19,15 @@ class TestDescriptionProvider(testClass: TestClass) {
     testCases.map(describeCase)
 
   private def describeCase(testCase: TestCase): Description =
-    describeMethod(testCase.method) ++> describeTestKits(testCase.kits)
+    describeMethod(testCase.method) ++> describeTestKits(testCase)
 
   def describeMethod(method: FrameworkMethod): Description =
     Description.createSuiteDescription(method.getName)
 
-  private def describeTestKits(testKits: Seq[TestKit]): Iterable[Description] =
-    testKits.map(describeTestKit)
+  private def describeTestKits(testCase: TestCase): Iterable[Description] =
+    testCase.kits.map(describeTestKit(testCase, _))
 
-  def describeTestKit(kit: TestKit): Description =
-    Description.createTestDescription(testClass.getJavaClass, kit.data.toString())
+  def describeTestKit(testCase: TestCase, kit: TestKit): Description =
+    Description.createTestDescription(testClass.getJavaClass,
+      kit.data.toString() + " - " + testCase.method.getName)
 }

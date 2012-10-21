@@ -25,7 +25,7 @@ class TestiniParameterisedTestRunner(testCases: Seq[TestCase], descriptionProvid
   def descriptionForTestCase(method: FrameworkMethod): Description =
     testKitsForMethods get method match {
       case Some(testKitHolder) =>
-        descriptionProvider.describeTestKit(testKitHolder.currentTestKit)
+        descriptionProvider.describeTestKit(testKitHolder.testCase, testKitHolder.currentTestKit)
       case None =>
         descriptionProvider.describeMethod(method)
     }

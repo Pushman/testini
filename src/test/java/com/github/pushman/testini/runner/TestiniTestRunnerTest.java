@@ -28,4 +28,16 @@ public class TestiniTestRunnerTest {
                 new TestKitData(newArrayList("foo", "FOO"))
         );
     }
+
+    @Test
+    public void shouldConvertToLowercase(String actual, String expected) {
+        assertThat(actual.toLowerCase()).isEqualTo(expected);
+    }
+
+    public List<? extends TestKit> lowerToUpper() {
+        return newArrayList(
+                new TestKitData(newArrayList("Hello, world", "HELLO, WORLD")),
+                new TestKitData(newArrayList("foo", "FOO"))
+        );
+    }
 }
