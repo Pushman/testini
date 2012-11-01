@@ -6,10 +6,18 @@ import org.junit.Test
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.util.TraversableUtils._
 
-class AnnotationTestCaseProvider(testClass: TestClass, testKitsProviders: Seq[TestKitProvider])
-  extends TestCaseProvider {
+trait DefaultAnnotationTestCaseProvider {
 
-  override def testCases =
+  def testCaseProvider: TestCaseProvider = AnnotationTestCaseProviderImpl(
+    ReflectionTestKitsProvider(AnnotationMethodExecutor, ImplicitByNameMethodFinder)
+  )
+}
+
+trait AnnotationTestCaseProvider extends TestCaseProvider {
+
+  def testKitsProviders: Seq[TestKitProvider]
+
+  override def testCases(testClass: TestClass) =
     testClass.getAnnotatedMethods(classOf[Test]).map(createTestCase)
 
   def createTestCase(method: FrameworkMethod) =
@@ -18,9 +26,11 @@ class AnnotationTestCaseProvider(testClass: TestClass, testKitsProviders: Seq[Te
     else
       NoArgTestCase(method)
 
-  def getKits(method: FrameworkMethod): Seq[TestKit] =
+  def getKits(implicit method: FrameworkMethod): Seq[TestKit] =
     testKitsProviders.findSome(_.provideTestKits(method)) match {
       case Some(testKits) => testKits
       case None => throw new IllegalArgumentException("Cannot find TestKitProvider for " + method)
     }
 }
+
+case class AnnotationTestCaseProviderImpl(testKitsProviders: TestKitProvider*) extends AnnotationTestCaseProvider

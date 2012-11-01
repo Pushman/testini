@@ -1,47 +1,32 @@
 package com.github.pushman.testini.runner
 
 import org.junit.runners.BlockJUnit4ClassRunner
-import org.junit.runners.model.FrameworkMethod
+import org.junit.runners.model.{Statement, FrameworkMethod}
 
 import org.junit.runner.Description
-import com.github.pushman.testini.descriptions.TestDescriptionProvider
 import java.util
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.validation.TestCaseValidator
-import com.github.pushman.testini.methods.TestMethodsProvider
-import com.github.pushman.testini.testCases.{AnnotationTestCaseProvider, MethodReflectionTestKitsProvider}
+import com.github.pushman.testini.testCases.DefaultAnnotationTestCaseProvider
 
 class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
 
-  private lazy val testCaseValidator = new TestCaseValidator
-  private lazy val descriptionProvider = new TestDescriptionProvider(getTestClass)
-  private lazy val testCaseProvider = new AnnotationTestCaseProvider(getTestClass,
-    List(MethodReflectionTestKitsProvider))
-  private lazy val testMethodsProvider = new TestMethodsProvider
+  lazy val testRunner: AbstractTestRunner = new TestRunner with TestRunnerValidator
+    with TestRunnerTestDescriptionProvider with TestRunnerTestMethodProvider
+    with TestRunnerMethodInvokerProvider with DefaultAnnotationTestCaseProvider {
+    def testClass = getTestClass
+  }
 
-  private lazy val testCases = testCaseProvider.testCases
+  override def computeTestMethods: util.List[FrameworkMethod] = testRunner.testMethods.toList
 
-  private lazy val parameterisedTestRunner = new TestiniParameterisedTestRunner(testCases, descriptionProvider)
-
-  override def computeTestMethods =
-    testMethodsProvider.computeTestMethods(testCases)
-
-  override val getDescription: Description =
-    descriptionProvider.describeTest(testCases)
+  override def getDescription: Description = testRunner.suiteDescription
 
   override def validateTestMethods(errors: util.List[Throwable]) {
-    errors.addAll(testCaseValidator.validateAll(testCases))
+    errors.addAll(testRunner.validate)
   }
 
   override def describeChild(method: FrameworkMethod) =
-    parameterisedTestRunner.descriptionForTestCase(method)
+    testRunner.childDescription(method)
 
-  override def methodInvoker(method: FrameworkMethod, testTarget: Any) =
-    parameterisedTestRunner.methodInvoker(method, testTarget) match {
-      case Some(invoker) => {
-        parameterisedTestRunner.notifyMethodInvoked(method)
-        invoker
-      }
-      case None => super.methodInvoker(method, testTarget)
-    }
+  override def methodInvoker(method: FrameworkMethod, testTarget: Any): Statement =
+    testRunner.methodInvoker(method)(testTarget)
 }

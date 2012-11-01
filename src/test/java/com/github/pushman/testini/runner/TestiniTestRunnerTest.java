@@ -34,10 +34,10 @@ public class TestiniTestRunnerTest {
         assertThat(actual.toLowerCase()).isEqualTo(expected);
     }
 
-    public List<? extends TestKit> lowerToUpper() {
+    public List<? extends TestKit> parametersForShouldConvertToLowercase() {
         return newArrayList(
-                new TestKitData(newArrayList("Hello, world", "HELLO, WORLD")),
-                new TestKitData(newArrayList("foo", "FOO"))
+                new TestKitData(newArrayList("Hello, world", "hello, world")),
+                new TestKitData(newArrayList("foo", "foo"))
         );
     }
 }

@@ -9,12 +9,11 @@ object TestKitData {
   val Ignore = "ignore"
 }
 
-case class TestKitData(@BeanProperty var kitData: java.util.List[_],
-                       @BeanProperty var ignore: Boolean) extends TestKit {
+case class TestKitData(var data: Seq[AnyRef], @BeanProperty var ignore: Boolean) extends TestKit {
 
-  def this(data: java.util.List[_]) = this(data, false)
+  def this(data: java.util.List[_ <: AnyRef]) = this(data, false)
 
-  def this() = this(List(), false)
+  @BeanProperty var kitData: java.util.List[_ <: AnyRef] = data
 
-  def data = kitData
+  def this() = this(List.empty, false)
 }

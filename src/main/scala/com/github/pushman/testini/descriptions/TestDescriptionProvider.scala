@@ -9,13 +9,13 @@ import com.github.pushman.testini.data.{TestKit, TestCase}
 
 class TestDescriptionProvider(testClass: TestClass) {
 
-  def describeTest(testCases: Seq[TestCase]): Description =
+  def describeTest(testCases: Iterable[TestCase]): Description =
     describeSuite ++> describeTestCases(testCases)
 
   private def describeSuite: Description =
     Description.createSuiteDescription(testClass.getName, testClass.getAnnotations: _*)
 
-  private def describeTestCases(testCases: Seq[TestCase]): Iterable[Description] =
+  private def describeTestCases(testCases: Iterable[TestCase]): Iterable[Description] =
     testCases.map(describeCase)
 
   private def describeCase(testCase: TestCase): Description =
