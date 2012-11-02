@@ -2,6 +2,7 @@ package com.github.pushman.testini.runner;
 
 import com.github.pushman.testini.data.TestKit;
 import com.github.pushman.testini.xml.data.TestKitData;
+import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,11 +31,12 @@ public class TestiniTestRunnerTest {
     }
 
     @Test
+    @Parameters(method = "upperToLower")
     public void shouldConvertToLowercase(String actual, String expected) {
         assertThat(actual.toLowerCase()).isEqualTo(expected);
     }
 
-    public List<? extends TestKit> parametersForShouldConvertToLowercase() {
+    public List<? extends TestKit> upperToLower() {
         return newArrayList(
                 new TestKitData(newArrayList("Hello, world", "hello, world")),
                 new TestKitData(newArrayList("foo", "foo"))

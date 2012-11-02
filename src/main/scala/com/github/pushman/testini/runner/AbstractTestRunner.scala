@@ -31,7 +31,7 @@ trait TestRunner extends AbstractTestRunner {
 
   def testClass: TestClass
 
-  def testCases: Map[FrameworkMethod, TestCase]
+  def methodsTestCases: Map[FrameworkMethod, TestCase]
 }
 
 trait TestRunnerValidator {
@@ -39,7 +39,7 @@ trait TestRunnerValidator {
 
   private def testCaseValidator = new TestCaseValidator
 
-  override def validate = testCases.values.toList.flatMap(testCaseValidator.validate)
+  override def validate = methodsTestCases.values.toList.flatMap(testCaseValidator.validate)
 }
 
 trait TestRunnerTestDescriptionProvider {
@@ -47,12 +47,12 @@ trait TestRunnerTestDescriptionProvider {
 
   private def descriptionProvider: TestDescriptionProvider = new TestDescriptionProvider(testClass)
 
-  override def suiteDescription = descriptionProvider.describeTest(testCases.values)
+  override def suiteDescription = descriptionProvider.describeTest(methodsTestCases.values)
 
   override def childDescription(method: FrameworkMethod) = methodDescriptions(method).next()
 
   val methodDescriptions: Map[FrameworkMethod, Iterator[Description]] =
-    testCases.transform(descriptionIteratorForTestCase)
+    methodsTestCases.transform(descriptionIteratorForTestCase)
 
   def descriptionIteratorForTestCase(method: FrameworkMethod, testCase: TestCase): Iterator[Description] =
     if (testCase.isParameterised)
@@ -66,10 +66,10 @@ trait TestRunnerTestMethodProvider {
 
   def testCaseProvider: TestCaseProvider
 
-  override def testCases = testCaseProvider.testCases(testClass).map(tc => (tc.method -> tc)).toMap
+  override def methodsTestCases = testCaseProvider.testCases(testClass).map(tc => (tc.method -> tc)).toMap
 
   override def testMethods: Iterable[FrameworkMethod] = for {
-    (method, testCase) <- testCases
+    (method, testCase) <- methodsTestCases
     methods <- extractMethods(method, testCase)
   } yield methods
 
@@ -86,14 +86,14 @@ trait TestRunnerMethodInvokerProvider {
   override def methodInvoker(method: FrameworkMethod) = methodInvokers(method).next()
 
   val methodInvokers: Map[FrameworkMethod, Iterator[MethodInvoker]] =
-    testCases.transform(methodInvokerIteratorForTestCase)
+    methodsTestCases.transform(toMethodInvokers)
 
-  def methodInvokerIteratorForTestCase(method: FrameworkMethod, testCase: TestCase): Iterator[MethodInvoker] =
+  private def toMethodInvokers(method: FrameworkMethod, testCase: TestCase): Iterator[MethodInvoker] =
     if (testCase.isParameterised)
-      TraversableUtils.iterator(testCase.kits, testKitInvoker(method))
+      TraversableUtils.iterator(testCase.kits, invokerForKit(method))
     else
       Iterator.single(new InvokeMethod(method, _: Any))
 
-  def testKitInvoker(method: FrameworkMethod)(testKit: TestKit) =
+  private def invokerForKit(method: FrameworkMethod)(testKit: TestKit) =
     new ParameterisedStatement(method, testKit, _: Any)
 }

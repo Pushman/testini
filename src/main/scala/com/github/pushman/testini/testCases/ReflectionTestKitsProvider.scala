@@ -4,13 +4,16 @@ import org.junit.runners.model.FrameworkMethod
 import com.github.pushman.testini.data.TestKit
 import com.github.pushman.testini.util.TestKitConverter
 
-case class ReflectionTestKitsProvider(methodExecutor: MethodExecutor, methodFinder: TestKitProviderMethodFinder)
+case class ReflectionTestKitsProvider(methodFinder: TestKitProviderMethodFinder, methodExecutor: MethodExecutor)
   extends TestKitProvider {
+
+  private implicit def converter: (Any) => Seq[TestKit] =
+    TestKitConverter.forceConvertFrom(_)
 
   override def provideTestKits(method: FrameworkMethod): Option[Seq[TestKit]] =
     methodFinder.findProviderMethod(method.getMethod) collect {
       case providerMethod =>
-        extractTestKits(methodExecutor.execute(method, providerMethod))
+        methodExecutor.execute(method, providerMethod)
     }
 
   def extractTestKits(invocationResult: Any): Seq[TestKit] =
