@@ -5,17 +5,22 @@ import org.junit.runners.model.{TestClass, FrameworkMethod}
 import org.junit.Test
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.util.TraversableUtils._
+import com.github.pushman.testini.util.TestKitConverter
 
-trait DefaultAnnotationTestCaseProvider {
+object DefaultAnnotationTestCaseProvider extends TestCaseProvider {
 
-  def testCaseProvider: TestCaseProvider = AnnotationTestCaseProviderImpl(
-    ReflectionTestKitsProvider(ImplicitByNameMethodFinder, AnnotationMethodExecutor)
+  def testCases(testClass: TestClass) = configuration.testCases(testClass)
+
+  val configuration = TestCaseProviderImpl(
+    SourceMethodTestKitsProvider(ImplicitByNameMethodFinder, methodExecutor),
+    SourceMethodTestKitsProvider(InAnnotationDefinedMethodFinder, methodExecutor),
+    SourceClassTestKitsProvider(ImplicitByPatternMethodFinder, methodExecutor)
   )
+
+  def methodExecutor = new AnnotationMethodExecutor with TestKitConverter
 }
 
-abstract class AnnotationTestCaseProvider extends TestCaseProvider {
-
-  val testKitsProviders: Seq[TestKitProvider]
+case class TestCaseProviderImpl(testKitsProviders: TestKitProvider*) extends TestCaseProvider {
 
   override def testCases(testClass: TestClass) =
     testClass.getAnnotatedMethods(classOf[Test]).map(createTestCase)
@@ -32,5 +37,3 @@ abstract class AnnotationTestCaseProvider extends TestCaseProvider {
   def noTestKitProviderError(method: FrameworkMethod) =
     throw new IllegalArgumentException("Cannot find TestKitProvider for " + method.getMethod)
 }
-
-case class AnnotationTestCaseProviderImpl(testKitsProviders: TestKitProvider*) extends AnnotationTestCaseProvider

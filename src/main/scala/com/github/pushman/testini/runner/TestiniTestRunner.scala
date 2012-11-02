@@ -6,15 +6,10 @@ import org.junit.runners.model.{Statement, FrameworkMethod}
 import org.junit.runner.Description
 import java.util
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.testCases.DefaultAnnotationTestCaseProvider
 
 class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
 
-  lazy val testRunner: AbstractTestRunner = new TestRunner with TestRunnerValidator
-    with TestRunnerTestDescriptionProvider with TestRunnerTestMethodProvider
-    with TestRunnerMethodInvokerProvider with DefaultAnnotationTestCaseProvider {
-    def testClass = getTestClass
-  }
+  lazy val testRunner: AbstractTestRunner = new TestRunnerDefaultConfiguration(getTestClass)
 
   override def computeTestMethods: util.List[FrameworkMethod] = testRunner.testMethods.toList
 

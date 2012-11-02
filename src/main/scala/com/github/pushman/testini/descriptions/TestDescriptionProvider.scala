@@ -28,6 +28,8 @@ class TestDescriptionProvider(testClass: TestClass) {
     testCase.kits.map(describeTestKit(testCase, _))
 
   def describeTestKit(testCase: TestCase, kit: TestKit): Description =
-    Description.createTestDescription(testClass.getJavaClass,
-      kit.data.toString() + " - " + testCase.method.getName)
+    Description.createTestDescription(testClass.getJavaClass, testKitSummary(testCase, kit))
+
+  def testKitSummary(testCase: TestCase, kit: TestKit): String =
+    kit.data.mkString(", ") + " - " + testCase.method.getName
 }

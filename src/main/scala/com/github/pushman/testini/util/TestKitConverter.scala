@@ -3,10 +3,13 @@ package com.github.pushman.testini.util
 import com.github.pushman.testini.data.TestKit
 import scala.collection.JavaConversions._
 
-object TestKitConverter {
+trait TestKitConverter {
 
-  def forceConvertFrom(invocationResult: Any): Seq[TestKit] =
-    convertFrom(invocationResult).getOrElse(throw new TestKitConverterError(invocationResult))
+  def convert(invocationResult: Any): Seq[TestKit] =
+    convertFrom(invocationResult).getOrElse(testConverterError(invocationResult))
+
+  private def testConverterError(invocationResult: Any) =
+    throw new TestKitConverterError(invocationResult)
 
   def convertFrom(invocationResult: Any): Option[Seq[TestKit]] =
     invocationResult match {

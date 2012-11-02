@@ -42,4 +42,15 @@ public class TestiniTestRunnerTest {
                 new TestKitData(newArrayList("foo", "foo"))
         );
     }
+
+    @Test
+    @Parameters(source = TestiniTestRunnerTestData.class)
+    public void shouldCompare(String left, String right, Integer expected) {
+        assertThat(Math.round(Math.signum(left.compareTo(right)))).isEqualTo(expected);
+    }
+
+    @Parameters
+    public void shouldCompareIgnoringCase(String left, String right, Integer expected) {
+        assertThat(left.compareToIgnoreCase(right)).isEqualTo(expected);
+    }
 }

@@ -9,7 +9,7 @@ import com.github.pushman.testini.data.TestCase
 import com.github.pushman.testini.validation.TestCaseValidator
 import com.github.pushman.testini.util.TraversableUtils
 import org.junit.internal.runners.statements.InvokeMethod
-import com.github.pushman.testini.testCases.TestCaseProvider
+import com.github.pushman.testini.testCases.{DefaultAnnotationTestCaseProvider, TestCaseProvider}
 import collection.immutable.Iterable
 
 trait AbstractTestRunner {
@@ -32,6 +32,15 @@ trait TestRunner extends AbstractTestRunner {
   def testClass: TestClass
 
   def methodsTestCases: Map[FrameworkMethod, TestCase]
+}
+
+trait TestRunnerTestCaseProvider {
+  this: TestRunner =>
+
+  protected def testCaseProvider: TestCaseProvider = DefaultAnnotationTestCaseProvider
+
+  override def methodsTestCases: Map[FrameworkMethod, TestCase] =
+    testCaseProvider.testCases(testClass).map(tc => (tc.method -> tc)).toMap
 }
 
 trait TestRunnerValidator {
@@ -64,10 +73,6 @@ trait TestRunnerTestDescriptionProvider {
 trait TestRunnerTestMethodProvider {
   this: TestRunner =>
 
-  def testCaseProvider: TestCaseProvider
-
-  override def methodsTestCases = testCaseProvider.testCases(testClass).map(tc => (tc.method -> tc)).toMap
-
   override def testMethods: Iterable[FrameworkMethod] = for {
     (method, testCase) <- methodsTestCases
     methods <- extractMethods(method, testCase)
@@ -97,3 +102,7 @@ trait TestRunnerMethodInvokerProvider {
   private def invokerForKit(method: FrameworkMethod)(testKit: TestKit) =
     new ParameterisedStatement(method, testKit, _: Any)
 }
+
+class TestRunnerDefaultConfiguration(val testClass: TestClass) extends TestRunner with TestRunnerValidator
+with TestRunnerTestDescriptionProvider with TestRunnerTestMethodProvider
+with TestRunnerTestCaseProvider with TestRunnerMethodInvokerProvider
