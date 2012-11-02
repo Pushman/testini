@@ -5,5 +5,5 @@ import com.github.pushman.testini.data.TestKit
 
 trait TestKitProvider {
 
-  def provideTestKits(method: FrameworkMethod): Option[Seq[TestKit]]
+  def provideTestKits(testMethod: FrameworkMethod): Option[Seq[TestKit]]
 }

@@ -1,10 +1,15 @@
-package com.github.pushman.testini.testCases
+package com.github.pushman.testini.testCases.providers.annotations
 
-import java.lang.reflect.{Modifier, Method}
 import org.junit.runners.model.FrameworkMethod
+import java.lang.reflect.{Modifier, Method}
 import com.github.pushman.testini.data.TestKit
 
-abstract class AnnotationMethodExecutor extends MethodExecutor {
+trait MethodExecutor {
+
+  def execute(method: FrameworkMethod, providedMethod: Method): Seq[TestKit]
+}
+
+abstract class ByReflectionMethodExecutor extends MethodExecutor {
 
   def convert(invocationResult: Any): Seq[TestKit]
 
@@ -23,3 +28,4 @@ abstract class AnnotationMethodExecutor extends MethodExecutor {
     else
       providedMethod.getDeclaringClass.newInstance()
 }
+

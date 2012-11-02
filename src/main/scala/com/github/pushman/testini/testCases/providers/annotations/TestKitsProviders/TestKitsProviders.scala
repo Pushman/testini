@@ -1,10 +1,14 @@
-package com.github.pushman.testini.testCases
+package com.github.pushman.testini.testCases.providers.annotations
 
+import com.github.pushman.testini.testCases.{TestKitProvider, TestKitProviderMethodFinder}
 import org.junit.runners.model.FrameworkMethod
 import junitparams.Parameters
 import java.lang.reflect.Method
 
-case class SourceMethodTestKitsProvider(methodFinder: TestKitProviderMethodFinder, methodExecutor: MethodExecutor)
+package object testKitsProviders {
+}
+
+case class MethodTestKitsProvider(methodFinder: TestKitProviderMethodFinder, methodExecutor: MethodExecutor)
   extends TestKitProvider {
 
   override def provideTestKits(method: FrameworkMethod) =
@@ -14,7 +18,7 @@ case class SourceMethodTestKitsProvider(methodFinder: TestKitProviderMethodFinde
     }
 }
 
-case class SourceClassTestKitsProvider(methodFinder: TestKitProviderMethodFinder, methodExecutor: MethodExecutor)
+case class ClassTestKitsProvider(methodFinder: TestKitProviderMethodFinder, methodExecutor: MethodExecutor)
   extends TestKitProvider {
 
   def provideTestKits(testMethod: FrameworkMethod) =

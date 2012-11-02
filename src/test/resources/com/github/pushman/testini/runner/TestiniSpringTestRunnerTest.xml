@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:test="http://pushman.github.com/schema/test"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://pushman.github.com/schema/test http://pushman.github.com/schema/test.xsd">
+
+    <test:case id="shouldConvertToUppercase">
+        <test:kit>
+            <value>Hello, World</value>
+            <value>HELLO, WORLD</value>
+        </test:kit>
+        <test:kit>
+            <value>foo</value>
+            <value>FOO</value>
+        </test:kit>
+    </test:case>
+
+    <test:case id="shouldConvertToLowercase">
+        <test:kit>
+            <value>Hello, World</value>
+            <value>hello, world</value>
+        </test:kit>
+        <test:kit>
+            <value>FOO</value>
+            <value>foo</value>
+        </test:kit>
+    </test:case>
+
+</beans>

@@ -1,15 +1,19 @@
 package com.github.pushman.testini.runner
 
 import org.junit.runners.BlockJUnit4ClassRunner
-import org.junit.runners.model.{Statement, FrameworkMethod}
+import org.junit.runners.model.{TestClass, Statement, FrameworkMethod}
 
 import org.junit.runner.Description
 import java.util
 import scala.collection.JavaConversions._
+import com.github.pushman.testini.testCases.providers.annotations.TestRunnerAnnotationConfiguration
 
-class TestiniTestRunner(clazz: Class[_]) extends BlockJUnit4ClassRunner(clazz) {
+class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => GenericTestRunner)
+  extends BlockJUnit4ClassRunner(clazz) {
 
-  lazy val testRunner: AbstractTestRunner = new TestRunnerDefaultConfiguration(getTestClass)
+  def this(clazz: Class[_]) = this(clazz, new TestRunnerAnnotationConfiguration(_: TestClass))
+
+  lazy val testRunner = testRunnerBuilder(getTestClass)
 
   override def computeTestMethods: util.List[FrameworkMethod] = testRunner.testMethods.toList
 

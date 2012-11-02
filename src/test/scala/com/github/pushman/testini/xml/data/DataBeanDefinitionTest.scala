@@ -3,7 +3,7 @@ package com.github.pushman.testini.xml.data
 import org.junit.Test
 import org.junit.Assert._
 import org.springframework.context.support.ClassPathXmlApplicationContext
-import java.util.Locale
+import java.util.{Collections, Locale}
 import scala.collection.JavaConversions._
 
 class DataBeanDefinitionTest {
@@ -49,7 +49,7 @@ class DataBeanDefinitionTest {
   }
 
   private def ignoredKit: TestKitData = {
-    new TestKitData(List(), true)
+    new TestKitData(Collections.emptyList(), true)
   }
 
   private def loadEntityFromXml[T](entityId: String, clazz: Class[T]): T = {
