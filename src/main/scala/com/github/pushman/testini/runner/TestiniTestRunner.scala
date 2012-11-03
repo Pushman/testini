@@ -6,12 +6,12 @@ import org.junit.runners.model.{TestClass, Statement, FrameworkMethod}
 import org.junit.runner.Description
 import java.util
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.testCases.providers.annotations.TestRunnerAnnotationConfiguration
+import com.github.pushman.testini.testCases.providers.annotations.AnnotationsTestRunnerConfiguration
 
-class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => GenericTestRunner)
+class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestRunner)
   extends BlockJUnit4ClassRunner(clazz) {
 
-  def this(clazz: Class[_]) = this(clazz, new TestRunnerAnnotationConfiguration(_: TestClass))
+  def this(clazz: Class[_]) = this(clazz, new AnnotationsTestRunnerConfiguration(_: TestClass))
 
   lazy val testRunner = testRunnerBuilder(getTestClass)
 

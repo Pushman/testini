@@ -9,13 +9,3 @@ trait TestCase {
 
   def isParameterised: Boolean
 }
-
-case class NoArgTestCase(method: FrameworkMethod) extends TestCase {
-  def kits = List.empty
-
-  def isParameterised = false
-}
-
-case class ParameterisedTestCase(method: FrameworkMethod, kits: Seq[TestKit]) extends TestCase {
-  def isParameterised = true
-}

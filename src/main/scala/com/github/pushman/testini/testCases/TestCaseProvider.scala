@@ -1,6 +1,6 @@
 package com.github.pushman.testini.testCases
 
-import com.github.pushman.testini.data.{TestKit, NoArgTestCase, ParameterisedTestCase, TestCase}
+import com.github.pushman.testini.data.{TestKit, TestCase}
 import org.junit.runners.model.{FrameworkMethod, TestClass}
 import org.junit.Test
 import scala.collection.JavaConversions._
@@ -33,4 +33,14 @@ case class TestCaseProviderImpl(testKitsProviders: TestKitProvider*) extends Par
 
   override def computeTestKits(method: FrameworkMethod): Option[Seq[TestKit]] =
     testKitsProviders.findSome(_.provideTestKits(method))
+}
+
+case class NoArgTestCase(method: FrameworkMethod) extends TestCase {
+  def kits = List.empty
+
+  def isParameterised = false
+}
+
+case class ParameterisedTestCase(method: FrameworkMethod, kits: Seq[TestKit]) extends TestCase {
+  def isParameterised = true
 }
