@@ -4,11 +4,11 @@ import com.github.pushman.testini.testCases._
 import org.junit.runners.model.TestClass
 import com.github.pushman.testini.util.TestKitConverter
 
-object DefaultAnnotationTestCaseProvider extends TestCaseProvider {
+case class AnnotationTestCaseProvider(testClass: TestClass) extends TestCaseProvider {
 
-  def testCases(testClass: TestClass) = configuration.testCases(testClass)
+  def testCases = TestCaseProviderImpl(testClass, testKitProviders).testCases
 
-  val configuration = TestCaseProviderImpl(
+  val testKitProviders = List(
     MethodTestKitsProvider(ImplicitByNameMethodFinder, methodExecutor),
     MethodTestKitsProvider(InAnnotationDefinedMethodFinder, methodExecutor),
     ClassTestKitsProvider(ImplicitByPatternMethodFinder, methodExecutor)

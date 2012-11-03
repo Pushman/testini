@@ -6,5 +6,5 @@ import com.github.pushman.testini.data.TestCase
 
 class SpringTestRunnerConfiguration(val testClass: TestClass) extends TestRunnerConfigurationBase {
 
-  override def testCases: Iterable[TestCase] = DefaultSpringTestCaseProvider.testCases(testClass)
+  override def testCases: Iterable[TestCase] = SpringTestKitsProvider(testClass).testCases
 }

@@ -6,5 +6,5 @@ import com.github.pushman.testini.data.TestCase
 
 class AnnotationsTestRunnerConfiguration(val testClass: TestClass) extends TestRunnerConfigurationBase {
 
-  def testCases: Iterable[TestCase] = DefaultAnnotationTestCaseProvider.testCases(testClass)
+  def testCases: Iterable[TestCase] = AnnotationTestCaseProvider(testClass).testCases
 }

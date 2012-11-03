@@ -4,15 +4,16 @@ import com.github.pushman.testini.data.{TestKit, TestCase}
 import org.junit.runners.model.{FrameworkMethod, TestClass}
 import org.junit.Test
 import scala.collection.JavaConversions._
+import com.github.pushman.testini.runner.configuration.TestClassProvider
 
 
 trait TestCaseProvider {
-  def testCases(testClass: TestClass): Seq[TestCase]
+  def testCases: Seq[TestCase]
 }
 
-trait ParameterisedTestCaseProvider extends TestCaseProvider {
+trait ParameterisedTestCaseProvider extends TestCaseProvider with TestClassProvider {
 
-  override def testCases(testClass: TestClass) =
+  override def testCases =
     testClass.getAnnotatedMethods(classOf[Test]).map(createTestCase)
 
   def createTestCase(method: FrameworkMethod) =
@@ -27,7 +28,7 @@ trait ParameterisedTestCaseProvider extends TestCaseProvider {
     throw new IllegalArgumentException("Cannot find any TestKits for " + method.getMethod)
 }
 
-case class TestCaseProviderImpl(testKitsProviders: TestKitProvider*) extends ParameterisedTestCaseProvider {
+case class TestCaseProviderImpl(testClass: TestClass, testKitsProviders: Seq[TestKitProvider]) extends ParameterisedTestCaseProvider {
 
   import com.github.pushman.testini.util.TraversableUtils._
 

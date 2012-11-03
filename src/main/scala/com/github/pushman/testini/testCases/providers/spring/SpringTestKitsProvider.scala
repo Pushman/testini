@@ -1,16 +1,11 @@
 package com.github.pushman.testini.testCases.providers.spring
 
-import com.github.pushman.testini.testCases.{ParameterisedTestCaseProvider, TestCaseProvider}
+import com.github.pushman.testini.testCases.ParameterisedTestCaseProvider
 import org.junit.runners.model.{FrameworkMethod, TestClass}
 import java.lang.String
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import com.github.pushman.testini.data.TestCase
-
-object DefaultSpringTestCaseProvider extends TestCaseProvider {
-
-  def testCases(testClass: TestClass) = SpringTestKitsProvider(testClass).testCases(testClass)
-}
 
 case class SpringTestKitsProvider(testClass: TestClass) extends ParameterisedTestCaseProvider {
 
