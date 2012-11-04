@@ -14,5 +14,5 @@ case class AnnotationTestCaseProvider(testClass: TestClass) extends TestCaseProv
     ClassTestKitsProvider(ImplicitByPatternMethodFinder, methodExecutor)
   )
 
-  def methodExecutor = new ByReflectionMethodExecutor with TestKitConverter
+  def methodExecutor = new UniqueByReflectionMethodExecutor with TestKitConverter
 }

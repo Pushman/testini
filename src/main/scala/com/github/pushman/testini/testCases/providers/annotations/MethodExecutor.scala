@@ -29,3 +29,16 @@ abstract class ByReflectionMethodExecutor extends MethodExecutor {
       providedMethod.getDeclaringClass.newInstance()
 }
 
+abstract class UniqueByReflectionMethodExecutor extends ByReflectionMethodExecutor {
+
+  override def execute(method: FrameworkMethod, providerMethod: Method) =
+    super.execute(method, providerMethod) match {
+      case Nil => Nil
+      case Seq(x) => List(x)
+      case xs => xs.head +: obtainUniqueResults(xs, method, providerMethod)
+    }
+
+  private def obtainUniqueResults(results: Seq[TestKit], method: FrameworkMethod, providerMethod: Method) = for {
+    i <- 1 until results.length
+  } yield super.execute(method, providerMethod)(i)
+}
