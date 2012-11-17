@@ -2,8 +2,8 @@ package com.github.pushman.testini.xml.data
 
 import reflect.BeanProperty
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.data.TestKit
 import java.util.Collections
+import com.github.pushman.testini.testKits.TestKit
 
 object TestKitData {
   val Data = "kitData"

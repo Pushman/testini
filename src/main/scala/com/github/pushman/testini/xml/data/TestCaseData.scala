@@ -3,7 +3,7 @@ package com.github.pushman.testini.xml.data
 import reflect.BeanProperty
 import java.util.Collections
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.data.TestCase
+import com.github.pushman.testini.testCases.TestCase
 
 object TestCaseData {
   val TestKits = "testKits"

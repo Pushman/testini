@@ -6,7 +6,7 @@ import org.junit.runners.model.{TestClass, Statement, FrameworkMethod}
 import org.junit.runner.Description
 import java.util
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.testCases.providers.annotations.AnnotationsTestRunnerConfiguration
+import com.github.pushman.testini.configuration.providers.annotations.AnnotationsTestRunnerConfiguration
 
 class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestRunner)
   extends BlockJUnit4ClassRunner(clazz) {

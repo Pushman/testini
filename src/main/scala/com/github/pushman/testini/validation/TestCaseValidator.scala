@@ -2,7 +2,8 @@ package com.github.pushman.testini.validation
 
 import java.util
 import scala.collection.JavaConversions._
-import com.github.pushman.testini.data.{TestKit, TestCase}
+import com.github.pushman.testini.testCases.TestCase
+import com.github.pushman.testini.testKits.TestKit
 
 class TestCaseValidator {
 

@@ -1,6 +1,6 @@
 package com.github.pushman.testini.runner;
 
-import com.github.pushman.testini.data.TestKit;
+import com.github.pushman.testini.testKits.TestKit;
 import com.github.pushman.testini.xml.data.TestKitData;
 
 import java.util.List;
