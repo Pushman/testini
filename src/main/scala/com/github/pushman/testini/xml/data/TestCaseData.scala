@@ -18,4 +18,6 @@ case class TestCaseData(@BeanProperty var testKits: java.util.List[TestKitData])
   def method = null
 
   def isParameterised = true
+
+  def isIgnored = false
 }

@@ -17,13 +17,13 @@ class TestCaseValidator {
   }
 
   private def validateKitsNotEmpty(testCase: TestCase): Option[Throwable] =
-    if (testCase.isParameterised && testCase.kits.isEmpty)
+    if (testCase.isParameterised && testCase.kits.isEmpty && !testCase.isIgnored)
       Some(noKitsErrors(testCase))
     else
       None
 
-  private def noKitsErrors(testCase: TestCase): IllegalArgumentException =
-    new IllegalArgumentException("No test kits found for parameterized method " + testCase.method.getMethod.getName)
+  private def noKitsErrors(testCase: TestCase) =
+    new NoTestKitsFoundException(testCase)
 
   private def validateKitsSize(testCase: TestCase): Seq[Throwable] = for {
     kit <- testCase.kits

@@ -3,6 +3,7 @@ package com.github.pushman.testini.runner;
 import com.github.pushman.testini.testKits.TestKit;
 import com.github.pushman.testini.xml.data.TestKitData;
 import junitparams.Parameters;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,6 +50,8 @@ public class TestiniTestRunnerTest {
         assertThat(Math.round(Math.signum(left.compareTo(right)))).isEqualTo(expected);
     }
 
+    @Test
+    @Ignore
     @Parameters
     public void shouldCompareIgnoringCase(String left, String right, Integer expected) {
         assertThat(left.compareToIgnoreCase(right)).isEqualTo(expected);

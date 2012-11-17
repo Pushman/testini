@@ -11,13 +11,16 @@ import com.github.pushman.testini.configuration.providers.annotations.Annotation
 class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestRunner)
   extends BlockJUnit4ClassRunner(clazz) {
 
-  def this(clazz: Class[_]) = this(clazz, new AnnotationsTestRunnerConfiguration(_: TestClass))
+  def this(clazz: Class[_]) =
+    this(clazz, new AnnotationsTestRunnerConfiguration(_: TestClass))
 
   lazy val testRunner = testRunnerBuilder(getTestClass)
 
-  override def computeTestMethods: util.List[FrameworkMethod] = testRunner.testMethods.toList
+  override def computeTestMethods: util.List[FrameworkMethod] =
+    testRunner.testMethods.toList
 
-  override def getDescription: Description = testRunner.suiteDescription
+  override def getDescription: Description =
+    testRunner.suiteDescription
 
   override def validateTestMethods(errors: util.List[Throwable]) {
     errors.addAll(testRunner.validate)

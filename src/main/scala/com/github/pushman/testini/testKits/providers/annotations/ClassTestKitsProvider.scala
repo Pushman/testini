@@ -1,13 +1,13 @@
 package com.github.pushman.testini.testKits.providers.annotations
 
-import com.github.pushman.testini.testKits.TestKitProvider
+import com.github.pushman.testini.testKits.TestKitsProvider
 import org.junit.runners.model.FrameworkMethod
 import junitparams.Parameters
 import java.lang.reflect.Method
 import com.github.pushman.testini.utils.methods.{MethodExecutor, MethodFinder}
 
 case class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor: MethodExecutor)
-  extends TestKitProvider {
+  extends TestKitsProvider {
 
   def provideTestKits(testMethod: FrameworkMethod) =
     providerMethods(testMethod).map(execute(testMethod))

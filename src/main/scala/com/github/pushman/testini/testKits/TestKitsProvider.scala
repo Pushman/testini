@@ -2,7 +2,7 @@ package com.github.pushman.testini.testKits
 
 import org.junit.runners.model.FrameworkMethod
 
-trait TestKitProvider {
+trait TestKitsProvider {
 
   def provideTestKits(testMethod: FrameworkMethod): Option[Seq[TestKit]]
 }

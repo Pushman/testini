@@ -9,4 +9,6 @@ trait TestCase {
   def kits: Seq[TestKit]
 
   def isParameterised: Boolean
+
+  def isIgnored: Boolean
 }
