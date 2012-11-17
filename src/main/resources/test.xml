@@ -28,6 +28,7 @@
                 <xsd:extension base="beans:identifiedType">
                     <xsd:group ref="beans:collectionElements"/>
                     <xsd:attribute name="ignore" type="xsd:boolean"/>
+                    <xsd:attributeGroup ref="beans:beanAttributes"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
