@@ -9,4 +9,5 @@ TestSuiteContext with
 TestRunnerTestMethodProvider with
 TestRunnerTestDescriptionProvider with
 TestRunnerValidator with
-TestRunnerMethodInvokerProvider
+TestRunnerMethodInvokerProvider with
+RunningTestContextProvider

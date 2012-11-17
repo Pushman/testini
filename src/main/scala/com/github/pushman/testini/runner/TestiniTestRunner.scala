@@ -7,6 +7,8 @@ import org.junit.runner.Description
 import java.util
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.configuration.providers.annotations.AnnotationsTestRunnerConfiguration
+import org.junit.runner.notification.RunNotifier
+import org.junit.Ignore
 
 class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestRunner)
   extends BlockJUnit4ClassRunner(clazz) {
@@ -15,6 +17,8 @@ class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestR
     this(clazz, new AnnotationsTestRunnerConfiguration(_: TestClass))
 
   lazy val testRunner = testRunnerBuilder(getTestClass)
+
+  var currentlyRunningTestContext: RunningTestContext = null
 
   override def computeTestMethods: util.List[FrameworkMethod] =
     testRunner.testMethods.toList
@@ -26,9 +30,27 @@ class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestR
     errors.addAll(testRunner.validate)
   }
 
+  override def runChild(method: FrameworkMethod, notifier: RunNotifier) {
+    currentlyRunningTestContext = testRunner.nextRunningTestContext(method)
+    val description: Description = describeChild(method)
+
+    if (isIgnored(currentlyRunningTestContext))
+      notifier.fireTestIgnored(description)
+    else
+      runLeaf(methodBlock(method), description, notifier)
+  }
+
+  def isIgnored(context: RunningTestContext): Boolean =
+    context match {
+      case NoArgRunningTestContext(testCase) =>
+        testCase.method.getAnnotation(classOf[Ignore]) != null
+      case ParameterisedRunningTestContext(testCase, testKit) =>
+        testCase.method.getAnnotation(classOf[Ignore]) != null || testKit.ignore
+    }
+
   override def describeChild(method: FrameworkMethod) =
-    testRunner.childDescription(method)
+    testRunner.childDescription(currentlyRunningTestContext)
 
   override def methodInvoker(method: FrameworkMethod, testTarget: Any): Statement =
-    testRunner.methodInvoker(method)(testTarget)
+    testRunner.methodInvoker(currentlyRunningTestContext)(testTarget)
 }
