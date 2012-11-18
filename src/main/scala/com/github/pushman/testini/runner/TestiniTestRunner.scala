@@ -1,56 +1,31 @@
 package com.github.pushman.testini.runner
 
-import org.junit.runners.BlockJUnit4ClassRunner
-import org.junit.runners.model.{TestClass, Statement, FrameworkMethod}
-
-import org.junit.runner.Description
-import java.util
-import scala.collection.JavaConversions._
+import org.junit.runners.model.TestClass
+import com.github.pushman.testini.XmlParametersConfiguration
+import com.github.pushman.testini.configuration.providers.spring.SpringTestRunnerConfiguration
 import com.github.pushman.testini.configuration.providers.annotations.AnnotationsTestRunnerConfiguration
-import org.junit.runner.notification.RunNotifier
-import org.junit.Ignore
+import com.github.pushman.testini.runner.GenericTestiniTestRunner.TestRunnerBuilder
 
-class TestiniTestRunner(clazz: Class[_], testRunnerBuilder: (TestClass) => TestRunner)
-  extends BlockJUnit4ClassRunner(clazz) {
 
-  def this(clazz: Class[_]) =
-    this(clazz, new AnnotationsTestRunnerConfiguration(_: TestClass))
+object RunnerFromAnnotationDetector extends TestRunnerBuilder {
 
-  lazy val testRunner = testRunnerBuilder(getTestClass)
+  def apply(testClass: TestClass): TestRunner =
+    findBuilder(testClass)(testClass)
 
-  var currentlyRunningTestContext: RunningTestContext = null
+  protected def findBuilder(testClass: TestClass) =
+    runnersForAnnotations.collectFirst({
+      case (annotationType, builder) if testClass.getJavaClass.isAnnotationPresent(annotationType) =>
+        builder
+    }).getOrElse(defaultBuilder)
 
-  override def computeTestMethods: util.List[FrameworkMethod] =
-    testRunner.testMethods.toList
+  protected val runnersForAnnotations = Map(
+    classOf[XmlParametersConfiguration] -> SpringTestRunnerConfiguration
+  )
 
-  override def getDescription: Description =
-    testRunner.suiteDescription
+  protected val defaultBuilder: TestRunnerBuilder =
+    AnnotationsTestRunnerConfiguration
+}
 
-  override def validateTestMethods(errors: util.List[Throwable]) {
-    errors.addAll(testRunner.validate)
-  }
-
-  override def runChild(method: FrameworkMethod, notifier: RunNotifier) {
-    currentlyRunningTestContext = testRunner.nextRunningTestContext(method)
-    val description: Description = describeChild(method)
-
-    if (isIgnored(currentlyRunningTestContext))
-      notifier.fireTestIgnored(description)
-    else
-      runLeaf(methodBlock(method), description, notifier)
-  }
-
-  def isIgnored(context: RunningTestContext): Boolean =
-    context match {
-      case NoArgRunningTestContext(testCase) =>
-        testCase.method.getAnnotation(classOf[Ignore]) != null
-      case ParameterisedRunningTestContext(testCase, testKit) =>
-        testCase.method.getAnnotation(classOf[Ignore]) != null || testKit.ignore
-    }
-
-  override def describeChild(method: FrameworkMethod) =
-    testRunner.childDescription(currentlyRunningTestContext)
-
-  override def methodInvoker(method: FrameworkMethod, testTarget: Any): Statement =
-    testRunner.methodInvoker(currentlyRunningTestContext)(testTarget)
+class TestiniTestRunner(clazz: Class[_])
+  extends GenericTestiniTestRunner(clazz, RunnerFromAnnotationDetector) {
 }

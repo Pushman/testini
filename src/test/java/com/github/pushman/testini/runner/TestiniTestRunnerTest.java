@@ -1,7 +1,7 @@
 package com.github.pushman.testini.runner;
 
+import com.github.pushman.testini.Parameterised;
 import com.github.pushman.testini.testKits.TestKit;
-import junitparams.Parameters;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class TestiniTestRunnerTest {
     }
 
     @Test
-    @Parameters(method = "upperToLower")
+    @Parameterised(method = "upperToLower")
     public void shouldConvertToLowercase(String actual, String expected) {
         assertThat(actual.toLowerCase()).isEqualTo(expected);
     }
@@ -44,14 +44,14 @@ public class TestiniTestRunnerTest {
     }
 
     @Test
-    @Parameters(source = TestiniTestRunnerTestData.class)
+    @Parameterised(source = TestiniTestRunnerTestData.class)
     public void shouldCompare(String left, String right, Integer expected) {
         assertThat(Math.round(Math.signum(left.compareTo(right)))).isEqualTo(expected);
     }
 
     @Test
     @Ignore
-    @Parameters
+    @Parameterised
     public void shouldCompareIgnoringCase(String left, String right, Integer expected) {
         assertThat(left.compareToIgnoreCase(right)).isEqualTo(expected);
     }

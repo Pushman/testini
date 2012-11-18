@@ -1,6 +1,7 @@
 package com.github.pushman.testini.test.collections;
 
-import com.github.pushman.testini.runner.TestiniSpringTestRunner;
+import com.github.pushman.testini.XmlParametersConfiguration;
+import com.github.pushman.testini.runner.TestiniTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -8,7 +9,8 @@ import java.util.Collection;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-@RunWith(TestiniSpringTestRunner.class)
+@RunWith(TestiniTestRunner.class)
+@XmlParametersConfiguration
 public class SpringCollectionsTest {
 
     @Test

@@ -2,9 +2,9 @@ package com.github.pushman.testini.testKits.providers.annotations
 
 import com.github.pushman.testini.testKits.TestKitsProvider
 import org.junit.runners.model.FrameworkMethod
-import junitparams.Parameters
 import java.lang.reflect.Method
 import com.github.pushman.testini.utils.methods.{MethodExecutor, MethodFinder}
+import com.github.pushman.testini.Parameterised
 
 case class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor: MethodExecutor)
   extends TestKitsProvider {
@@ -13,7 +13,7 @@ case class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor: Met
     providerMethods(testMethod).map(execute(testMethod))
 
   def providerMethods(testMethod: FrameworkMethod) = for {
-    annotation <- Option(testMethod.getAnnotation(classOf[Parameters]))
+    annotation <- Option(testMethod.getAnnotation(classOf[Parameterised]))
     sourceClass <- Option(annotation.source())
     providerMethods <- Some(findProviderMethods(testMethod, sourceClass))
   } yield providerMethods
