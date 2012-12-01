@@ -20,10 +20,6 @@ class BeanPropertyDecoratorTest {
     assertEquals(expectedEntity, entity)
   }
 
-  private def loadEntityFromXml(entityId: String): TestEntity = {
-    new ClassPathXmlApplicationContext("classpath:/com/github/pushman/testini/xml/properties/BeanPropertyDecoratorTest.xml").getBean(entityId, classOf[TestEntity])
-  }
-
   @Test
   def shouldCreateEntityWithReferenceInCollection() {
     // given
@@ -34,5 +30,9 @@ class BeanPropertyDecoratorTest {
 
     // then
     assertEquals(expectedEntity, entity)
+  }
+
+  private def loadEntityFromXml(entityId: String): TestEntity = {
+    new ClassPathXmlApplicationContext("classpath:/com/github/pushman/testini/xml/properties/BeanPropertyDecoratorTest.xml").getBean(entityId, classOf[TestEntity])
   }
 }

@@ -18,4 +18,3 @@ class NamePropertyDefinitionParser extends BeanDefinitionDecorator {
     bean
   }
 }
-

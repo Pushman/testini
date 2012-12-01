@@ -7,7 +7,8 @@ import com.github.pushman.testini.xml.XmlTools
 
 class KitBeanDefinitionParser extends AbstractSingleBeanDefinitionParser {
 
-  override def getBeanClassName(element: Element) = classOf[TestKitData].getName
+  override def getBeanClassName(element: Element) =
+    classOf[TestKitData].getName
 
   override def doParse(element: Element, parserContext: ParserContext, bean: BeanDefinitionBuilder) {
     val propertyValue = getPropertyValue(parserContext, element, bean)
