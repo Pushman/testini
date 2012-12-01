@@ -1,9 +1,10 @@
 package com.github.pushman.testini.testCases
 
 import org.junit.runners.model.{FrameworkMethod, TestClass}
-import org.junit.Test
+import org.junit.{Ignore, Test}
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.testKits.TestKit
+import com.github.pushman.testini.Parameterised
 
 abstract class ParameterisedTestCasesProvider(testClass: TestClass) extends TestCasesProvider {
 
@@ -11,7 +12,9 @@ abstract class ParameterisedTestCasesProvider(testClass: TestClass) extends Test
     testClass.getAnnotatedMethods(classOf[Test]).map(createTestCase)
 
   def createTestCase(method: FrameworkMethod) =
-    if (method.getMethod.getParameterTypes.length > 0)
+    if (Option(method.getMethod.getAnnotation(classOf[Ignore])).isDefined)
+      IgnoredTestCase(method)
+    else if (Option(method.getMethod.getAnnotation(classOf[Parameterised])).isDefined)
       ParameterisedTestCase(method, computeTestKits(method).getOrElse(noTestKitsError(method)))
     else
       NoArgTestCase(method)

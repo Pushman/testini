@@ -7,7 +7,6 @@ import org.junit.runner.Description
 import java.util
 import scala.collection.JavaConversions._
 import org.junit.runner.notification.RunNotifier
-import org.junit.Ignore
 
 object GenericTestiniTestRunner {
   type TestRunnerBuilder = (TestClass) => TestRunner
@@ -45,9 +44,9 @@ class GenericTestiniTestRunner(clazz: Class[_], testRunnerBuilder: TestRunnerBui
   def isIgnored(context: RunningTestContext): Boolean =
     context match {
       case NoArgRunningTestContext(testCase) =>
-        testCase.method.getAnnotation(classOf[Ignore]) != null
+        testCase.isIgnored
       case ParameterisedRunningTestContext(testCase, testKit) =>
-        testCase.method.getAnnotation(classOf[Ignore]) != null || testKit.ignore
+        testCase.isIgnored || testKit.ignore
     }
 
   override def describeChild(method: FrameworkMethod) =

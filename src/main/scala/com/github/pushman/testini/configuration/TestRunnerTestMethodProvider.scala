@@ -13,7 +13,7 @@ trait TestRunnerTestMethodProvider {
   } yield methods
 
   private def extractMethods(testCase: TestCase): Seq[FrameworkMethod] =
-    if (testCase.isParameterised)
+    if (testCase.isParameterised && !testCase.isIgnored)
       List.fill(testCase.kits.size)(testCase.method)
     else
       List(testCase.method)

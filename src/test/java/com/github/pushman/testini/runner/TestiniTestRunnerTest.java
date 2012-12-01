@@ -18,6 +18,7 @@ public class TestiniTestRunnerTest {
     }
 
     @Test
+    @Parameterised
     public void shouldConvertToUppercase(String actual, String expected) {
         assertThat(actual.toUpperCase()).isEqualTo(expected);
     }
