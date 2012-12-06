@@ -6,3 +6,8 @@ trait TestKit {
 
   def ignore: Boolean
 }
+
+case class TestKitImpl(data: Seq[AnyRef]) extends TestKit {
+
+  def ignore = false
+}

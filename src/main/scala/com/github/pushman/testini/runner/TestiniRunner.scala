@@ -26,6 +26,6 @@ object RunnerFromAnnotationDetector extends TestRunnerBuilder {
     AnnotationsTestRunnerConfiguration
 }
 
-class TestiniTestRunner(clazz: Class[_])
+class TestiniRunner(clazz: Class[_])
   extends GenericTestiniTestRunner(clazz, RunnerFromAnnotationDetector) {
 }

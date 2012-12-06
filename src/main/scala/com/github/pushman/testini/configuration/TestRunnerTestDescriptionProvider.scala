@@ -16,5 +16,6 @@ trait TestRunnerTestDescriptionProvider {
         descriptionProvider.describeTestKit(testCase, testKit)
     }
 
-  protected def descriptionProvider: TestDescriptionProvider = new TestDescriptionProvider(testClass)
+  protected val descriptionProvider: TestDescriptionProvider =
+    new TestDescriptionProvider(testClass)
 }

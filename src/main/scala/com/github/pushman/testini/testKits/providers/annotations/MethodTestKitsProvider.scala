@@ -10,6 +10,6 @@ case class MethodTestKitsProvider(methodFinder: MethodFinder, methodExecutor: Me
   override def provideTestKits(method: FrameworkMethod) =
     methodFinder.findFirstProviderMethod(method.getMethod, method.getMethod.getDeclaringClass) collect {
       case providerMethod =>
-        methodExecutor.execute(method, providerMethod)
+        methodExecutor.execute(providerMethod)
     }
 }

@@ -1,6 +1,7 @@
 package com.github.pushman.testini.runner;
 
 import com.github.pushman.testini.testKits.TestKit;
+import com.github.pushman.testini.utils.shortcuts.TestCaseShortcuts;
 import com.github.pushman.testini.xml.data.TestKitData;
 
 import java.util.List;
@@ -10,8 +11,8 @@ import static com.google.common.collect.Lists.newArrayList;
 @SuppressWarnings("UnusedDeclaration")
 public class TestiniTestRunnerTestData {
 
-    public List<? extends TestKit> lesserParameters() {
-        return newArrayList(
+    public TestKit[] lesserParameters() {
+        return TestCaseShortcuts.$(
                 new TestKitData(newArrayList("hello, world", "HELLO, WORLD", 1)),
                 new TestKitData(newArrayList("foo", "Foo", 1))
         );

@@ -13,8 +13,9 @@ trait RunningTestContextProvider {
     testCasesIterator(method).next()
 
   protected val testCasesIterator: Map[FrameworkMethod, Iterator[RunningTestContext]] = {
-    for (testCase <- testCases)
-    yield testCase.method -> contextsForTestCase(testCase)
+    for {
+      testCase <- testCases
+    } yield testCase.method -> contextsForTestCase(testCase)
   }.toMap
 
   def contextsForTestCase(testCase: TestCase): Iterator[RunningTestContext] =

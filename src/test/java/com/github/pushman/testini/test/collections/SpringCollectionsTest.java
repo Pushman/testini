@@ -2,7 +2,7 @@ package com.github.pushman.testini.test.collections;
 
 import com.github.pushman.testini.Parameterised;
 import com.github.pushman.testini.XmlParametersConfiguration;
-import com.github.pushman.testini.runner.TestiniTestRunner;
+import com.github.pushman.testini.runner.TestiniRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-@RunWith(TestiniTestRunner.class)
+@RunWith(TestiniRunner.class)
 @XmlParametersConfiguration
 public class SpringCollectionsTest {
 

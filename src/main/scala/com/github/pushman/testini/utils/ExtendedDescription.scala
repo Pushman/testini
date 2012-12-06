@@ -11,7 +11,8 @@ object ExtendedDescription {
 class ExtendedDescription(val description: Description) {
 
   def ++>(children: Iterable[Description]) = {
-    children.foreach(description.addChild(_))
+    for (child <- children)
+      description.addChild(child)
     this
   }
 }

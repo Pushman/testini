@@ -26,11 +26,13 @@ class TestDescriptionProvider(testClass: TestClass) {
     Description.createSuiteDescription(method.getName)
 
   private def describeTestKits(testCase: TestCase): Iterable[Description] =
-    testCase.kits.map(describeTestKit(testCase, _))
+    for {
+      kit <- testCase.kits
+    } yield describeTestKit(testCase, kit)
 
   def describeTestKit(testCase: TestCase, kit: TestKit): Description =
     Description.createTestDescription(testClass.getJavaClass, testKitSummary(testCase, kit))
 
-  def testKitSummary(testCase: TestCase, kit: TestKit): String =
+  private def testKitSummary(testCase: TestCase, kit: TestKit): String =
     kit.data.mkString(", ") + " - " + testCase.method.getName
 }

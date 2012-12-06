@@ -1,7 +1,7 @@
 package com.github.pushman.testini.test.collections;
 
 import com.github.pushman.testini.Parameterised;
-import com.github.pushman.testini.runner.TestiniTestRunner;
+import com.github.pushman.testini.runner.TestiniRunner;
 import com.github.pushman.testini.testKits.TestKit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.fest.assertions.Assertions.assertThat;
 
-@RunWith(TestiniTestRunner.class)
+@RunWith(TestiniRunner.class)
 public class AnnotationsCollectionsTest {
 
     @Test

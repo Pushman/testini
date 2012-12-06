@@ -9,18 +9,24 @@ import com.github.pushman.testini.Parameterised
 case class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor: MethodExecutor)
   extends TestKitsProvider {
 
-  def provideTestKits(testMethod: FrameworkMethod) =
-    providerMethods(testMethod).map(execute(testMethod))
+  def provideTestKits(testMethod: FrameworkMethod) = {
+    def providerMethods = for {
+      annotation <- Option(testMethod.getAnnotation(classOf[Parameterised]))
+      sourceClass <- Option(annotation.source())
+    } yield findProviderMethods(sourceClass)
 
-  def providerMethods(testMethod: FrameworkMethod) = for {
-    annotation <- Option(testMethod.getAnnotation(classOf[Parameterised]))
-    sourceClass <- Option(annotation.source())
-    providerMethods <- Some(findProviderMethods(testMethod, sourceClass))
-  } yield providerMethods
+    def findProviderMethods(clazz: Class[_]): Seq[Method] =
+      methodFinder.findAllProviderMethods(testMethod.getMethod, clazz)
 
-  private def execute(testMethod: FrameworkMethod)(providerMethods: Seq[Method]) =
-    providerMethods.flatMap(methodExecutor.execute(testMethod, _))
+    def execute(providerMethods: Seq[Method]) =
+      for {
+        providerMethod <- providerMethods
+        testKit <- methodExecutor.execute(providerMethod)
+      } yield testKit
 
-  private def findProviderMethods(testMethod: FrameworkMethod, clazz: Class[_]): Seq[Method] =
-    methodFinder.findAllProviderMethods(testMethod.getMethod, clazz)
+    for {
+      providerMethod <- providerMethods
+      testKit <- Some(execute(providerMethod))
+    } yield testKit
+  }
 }

@@ -1,6 +1,6 @@
 package com.github.pushman.testini.utils
 
-import com.github.pushman.testini.testKits.{TestKit, TestKitConverterError, TestKitImpl}
+import com.github.pushman.testini.testKits.{TestKit, TestKitImpl}
 import scala.collection.JavaConversions._
 
 trait TestKitConverter {
@@ -17,8 +17,7 @@ trait TestKitConverter {
 
   def convertArray(array: Array[_]) = for {
     arrayElement <- array
-    testKit = convertSingle(arrayElement) getOrElse testConverterError(arrayElement)
-  } yield testKit
+  } yield convertSingle(arrayElement) getOrElse testConverterError(arrayElement)
 
   def convertSingle(obj: Any) =
     Option(obj) collect {
@@ -28,4 +27,9 @@ trait TestKitConverter {
 
   private def testConverterError(invocationResult: Any) =
     throw new TestKitConverterError(invocationResult)
+}
+
+class TestKitConverterError(val invocationResult: Any)
+  extends RuntimeException("Cannot convert to Seq[TestKit] from " + invocationResult +
+    ", possible sources are: " + List(classOf[Seq[TestKit]], classOf[java.util.List[TestKit]], "Object[]")) {
 }

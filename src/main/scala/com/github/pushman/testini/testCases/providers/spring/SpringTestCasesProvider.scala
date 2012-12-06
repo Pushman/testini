@@ -12,8 +12,10 @@ case class SpringTestCasesProvider(testClass: TestClass) extends ParameterisedTe
   val context: ApplicationContext = new ClassPathXmlApplicationContext(configLocation)
 
   def computeTestKits(method: FrameworkMethod) =
-    Option(testCaseForMethod(method)).map(_.kits)
+    testCaseForMethod(method) collect {
+      case testCase => testCase.kits
+    }
 
-  def testCaseForMethod(method: FrameworkMethod): TestCase =
-    context.getBean(method.getMethod.getName, classOf[TestCase])
+  def testCaseForMethod(method: FrameworkMethod) =
+    Option(context.getBean(method.getMethod.getName, classOf[TestCase]))
 }

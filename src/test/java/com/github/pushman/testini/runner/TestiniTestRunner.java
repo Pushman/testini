@@ -10,8 +10,8 @@ import static com.github.pushman.testini.utils.shortcuts.TestCaseShortcuts.$;
 import static com.github.pushman.testini.utils.shortcuts.TestCaseShortcuts.$ign;
 import static org.fest.assertions.Assertions.assertThat;
 
-@RunWith(TestiniTestRunner.class)
-public class TestiniTestRunnerTest {
+@RunWith(TestiniRunner.class)
+public class TestiniTestRunner {
 
     @Test
     public void testMarker() {
