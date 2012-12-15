@@ -33,7 +33,7 @@ class GenericTestiniTestRunner(clazz: Class[_], testRunnerBuilder: TestRunnerBui
 
   override def runChild(method: FrameworkMethod, notifier: RunNotifier) {
     currentlyRunningTestContext = testRunner.nextRunningTestContext(method)
-    val description: Description = describeChild(method)
+    val description: Description = testRunner.childDescription(currentlyRunningTestContext)
 
     if (isIgnored(currentlyRunningTestContext))
       notifier.fireTestIgnored(description)
@@ -50,7 +50,7 @@ class GenericTestiniTestRunner(clazz: Class[_], testRunnerBuilder: TestRunnerBui
     }
 
   override def describeChild(method: FrameworkMethod) =
-    testRunner.childDescription(currentlyRunningTestContext)
+    testRunner.methodDescription(method)
 
   override def methodInvoker(method: FrameworkMethod, testTarget: Any): Statement =
     testRunner.methodInvoker(currentlyRunningTestContext)(testTarget)

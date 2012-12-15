@@ -13,9 +13,11 @@ trait TestRunner {
 
   def suiteDescription: Description
 
-  def nextRunningTestContext(method: FrameworkMethod): RunningTestContext
+  def methodDescription(method: FrameworkMethod): Description
 
   def childDescription(method: RunningTestContext): Description
+
+  def nextRunningTestContext(method: FrameworkMethod): RunningTestContext
 
   def methodInvoker(method: RunningTestContext): MethodInvoker
 }
