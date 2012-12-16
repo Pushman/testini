@@ -23,7 +23,7 @@ class TestDescriptionProvider(testClass: TestClass) {
     describeMethod(testCase.method) ++> describeTestKits(testCase)
 
   def describeMethod(method: FrameworkMethod): Description =
-    Description.createTestDescription(testClass.getJavaClass, method.getName, method.getAnnotations: _*)
+    Description.createSuiteDescription(method.getName, method.getAnnotations: _*)
 
   private def describeTestKits(testCase: TestCase): Iterable[Description] =
     for {

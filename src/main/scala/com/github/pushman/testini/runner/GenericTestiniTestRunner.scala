@@ -24,8 +24,9 @@ class GenericTestiniTestRunner(clazz: Class[_], testRunnerBuilder: TestRunnerBui
   override def computeTestMethods: util.List[FrameworkMethod] =
     testRunner.testMethods.toList
 
-  override def getDescription: Description =
+  override def getDescription: Description = {
     testRunner.suiteDescription
+  }
 
   override def validateTestMethods(errors: util.List[Throwable]) {
     errors.addAll(testRunner.validate)
@@ -48,9 +49,6 @@ class GenericTestiniTestRunner(clazz: Class[_], testRunnerBuilder: TestRunnerBui
       case ParameterisedRunningTestContext(testCase, testKit) =>
         testCase.isIgnored || testKit.ignore
     }
-
-  override def describeChild(method: FrameworkMethod) =
-    testRunner.methodDescription(method)
 
   override def methodInvoker(method: FrameworkMethod, testTarget: Any): Statement =
     testRunner.methodInvoker(currentlyRunningTestContext)(testTarget)

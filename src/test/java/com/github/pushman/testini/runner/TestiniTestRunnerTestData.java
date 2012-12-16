@@ -3,12 +3,14 @@ package com.github.pushman.testini.runner;
 import com.github.pushman.testini.testKits.TestKit;
 import com.github.pushman.testini.utils.shortcuts.TestCaseShortcuts;
 import com.github.pushman.testini.xml.data.TestKitData;
+import org.junit.Ignore;
 
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 @SuppressWarnings("UnusedDeclaration")
+@Ignore
 public class TestiniTestRunnerTestData {
 
     public TestKit[] lesserParameters() {
