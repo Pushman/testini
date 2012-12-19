@@ -34,5 +34,5 @@ class TestDescriptionProvider(testClass: TestClass) {
     Description.createTestDescription(testClass.getJavaClass, testKitSummary(testCase, kit))
 
   private def testKitSummary(testCase: TestCase, kit: TestKit): String =
-    kit.data.mkString(", ") + " - " + testCase.method.getName
+    kit.data.mkString(", ")
 }
