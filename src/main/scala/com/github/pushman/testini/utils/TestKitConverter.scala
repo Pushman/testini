@@ -1,6 +1,6 @@
 package com.github.pushman.testini.utils
 
-import com.github.pushman.testini.testKits.{TestKit, TestKitImpl}
+import com.github.pushman.testini.testKits.TestKit
 import scala.collection.JavaConversions._
 
 trait TestKitConverter {
@@ -27,6 +27,11 @@ trait TestKitConverter {
 
   private def testConverterError(invocationResult: Any) =
     throw new TestKitConverterError(invocationResult)
+}
+
+case class TestKitImpl(data: Seq[AnyRef]) extends TestKit {
+
+  def isIgnored = false
 }
 
 class TestKitConverterError(val invocationResult: Any)

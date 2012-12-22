@@ -47,7 +47,7 @@ class GenericTestiniTestRunner(clazz: Class[_], testRunnerBuilder: TestRunnerBui
       case NoArgRunningTestContext(testCase) =>
         testCase.isIgnored
       case ParameterisedRunningTestContext(testCase, testKit) =>
-        testCase.isIgnored || testKit.ignore
+        testCase.isIgnored || testKit.isIgnored
     }
 
   override def methodInvoker(method: FrameworkMethod, testTarget: Any): Statement =

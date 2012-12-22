@@ -11,12 +11,10 @@ class KitBeanDefinitionParser extends AbstractSingleBeanDefinitionParser {
     classOf[TestKitData].getName
 
   override def doParse(element: Element, parserContext: ParserContext, bean: BeanDefinitionBuilder) {
-    val propertyValue = getPropertyValue(parserContext, element, bean)
+    val propertyValue = XmlTools.getNestedBeans(parserContext, element, bean.getBeanDefinition)
     bean.addPropertyValue(TestKitData.Data, propertyValue)
-    XmlTools.setProperty(TestKitData.Ignore, element, bean)
-  }
-
-  private def getPropertyValue(parserContext: ParserContext, element: Element, bean: BeanDefinitionBuilder) = {
-    XmlTools.getPropertyValue(parserContext, element, bean.getBeanDefinition)
+    XmlTools.getBoolean("ignore", element).collect {
+      case isIgnored => XmlTools.setProperty(TestKitData.IsIgnored, isIgnored, bean)
+    }
   }
 }

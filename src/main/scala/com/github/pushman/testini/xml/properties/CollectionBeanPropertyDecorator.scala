@@ -25,7 +25,7 @@ class CollectionBeanPropertyDecorator extends BeanDefinitionDecorator {
   }
 
   private def getPropertyValue(parserContext: ParserContext, element: Element, bean: BeanDefinitionHolder) = {
-    XmlTools.getPropertyValue(parserContext, element, bean.getBeanDefinition)
+    XmlTools.getNestedBeans(parserContext, element, bean.getBeanDefinition)
   }
 
   private def getPropertyName(element: Element): String = {

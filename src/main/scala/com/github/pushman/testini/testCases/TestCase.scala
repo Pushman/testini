@@ -4,6 +4,7 @@ import org.junit.runners.model.FrameworkMethod
 import com.github.pushman.testini.testKits.TestKit
 
 trait TestCase {
+
   def method: FrameworkMethod
 
   def kits: Seq[TestKit]

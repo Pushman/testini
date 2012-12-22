@@ -7,9 +7,13 @@ import com.github.pushman.testini.testCases.TestCase
 
 object TestCaseData {
   val TestKits = "testKits"
+  val IsIgnored = "isIgnored"
 }
 
-case class TestCaseData(@BeanProperty var testKits: java.util.List[TestKitData]) extends TestCase {
+case class TestCaseData(@BeanProperty var testKits: java.util.List[TestKitData],
+                        @BeanProperty var isIgnored: Boolean) extends TestCase {
+
+  def this(testKits: java.util.List[TestKitData]) = this(testKits, false)
 
   def this() = this(Collections.emptyList())
 
@@ -18,6 +22,4 @@ case class TestCaseData(@BeanProperty var testKits: java.util.List[TestKitData])
   def method = null
 
   def isParameterised = true
-
-  def isIgnored = false
 }

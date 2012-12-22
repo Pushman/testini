@@ -7,10 +7,10 @@ import com.github.pushman.testini.testKits.TestKit
 
 object TestKitData {
   val Data = "kitData"
-  val Ignore = "ignore"
+  val IsIgnored = "isIgnored"
 }
 
-case class TestKitData(@BeanProperty var kitData: java.util.List[_ <: AnyRef], @BeanProperty var ignore: Boolean)
+case class TestKitData(@BeanProperty var kitData: java.util.List[_ <: AnyRef], @BeanProperty var isIgnored: Boolean)
   extends TestKit {
 
   def this(data: java.util.List[_ <: AnyRef]) = this(data, false)

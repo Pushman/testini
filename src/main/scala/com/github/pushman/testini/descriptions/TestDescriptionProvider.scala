@@ -3,10 +3,9 @@ package com.github.pushman.testini.descriptions
 import org.junit.runner.Description
 import org.junit.runners.model.{FrameworkMethod, TestClass}
 
-import com.github.pushman.testini.utils.ExtendedDescription._
+import ExtendedDescription._
 import com.github.pushman.testini.testCases.TestCase
 import com.github.pushman.testini.testKits.TestKit
-
 
 class TestDescriptionProvider(testClass: TestClass) {
 
