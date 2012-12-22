@@ -4,9 +4,9 @@ import com.github.pushman.testini.validation.TestCaseValidator
 import com.github.pushman.testini.runner.TestRunner
 
 trait TestRunnerValidator {
-  this: TestRunner with TestSuiteContext =>
+  this: TestCasesProvider =>
 
-  override def validate = testCases.flatMap(testCaseValidator.validate)
+  def validate = testCases.flatMap(testCaseValidator.validate)
 
   private def testCaseValidator = new TestCaseValidator
 }

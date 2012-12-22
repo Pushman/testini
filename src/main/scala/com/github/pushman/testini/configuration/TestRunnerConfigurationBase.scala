@@ -5,7 +5,7 @@ import com.github.pushman.testini.runner.TestRunner
 abstract class TestRunnerConfigurationBase extends
 TestRunner with
 TestClassProvider with
-TestSuiteContext with
+TestCasesProvider with
 TestRunnerTestMethodProvider with
 TestRunnerTestDescriptionProvider with
 TestRunnerValidator with

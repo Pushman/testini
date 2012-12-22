@@ -6,6 +6,8 @@ import com.github.pushman.testini.configuration.providers.spring.SpringTestRunne
 import com.github.pushman.testini.configuration.providers.annotations.AnnotationsTestRunnerConfiguration
 import com.github.pushman.testini.runner.GenericTestiniTestRunner.TestRunnerBuilder
 
+class TestiniRunner(clazz: Class[_]) extends GenericTestiniTestRunner(clazz, RunnerFromAnnotationDetector) {
+}
 
 object RunnerFromAnnotationDetector extends TestRunnerBuilder {
 
@@ -24,8 +26,4 @@ object RunnerFromAnnotationDetector extends TestRunnerBuilder {
 
   protected val defaultBuilder: TestRunnerBuilder =
     AnnotationsTestRunnerConfiguration
-}
-
-class TestiniRunner(clazz: Class[_])
-  extends GenericTestiniTestRunner(clazz, RunnerFromAnnotationDetector) {
 }

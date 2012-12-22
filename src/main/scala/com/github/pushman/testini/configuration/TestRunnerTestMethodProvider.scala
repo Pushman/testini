@@ -5,9 +5,9 @@ import com.github.pushman.testini.runner.TestRunner
 import com.github.pushman.testini.testCases.TestCase
 
 trait TestRunnerTestMethodProvider {
-  this: TestRunner with TestSuiteContext =>
+  this: TestCasesProvider =>
 
-  override def testMethods: Iterable[FrameworkMethod] = for {
+  def testMethods: Iterable[FrameworkMethod] = for {
     testCase <- testCases
     methods <- extractMethods(testCase)
   } yield methods

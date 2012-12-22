@@ -5,14 +5,11 @@ import com.github.pushman.testini.runner.{ParameterisedRunningTestContext, NoArg
 import org.junit.runners.model.FrameworkMethod
 
 trait TestRunnerTestDescriptionProvider {
-  this: TestRunner with TestSuiteContext with TestClassProvider =>
+  this: TestCasesProvider with TestClassProvider =>
 
-  override def suiteDescription = descriptionProvider.describeTest(testCases)
+  def suiteDescription = descriptionProvider.describeTest(testCases)
 
-  override def methodDescription(method: FrameworkMethod) =
-    descriptionProvider.describeMethod(method)
-
-  override def childDescription(context: RunningTestContext) =
+  def childDescription(context: RunningTestContext) =
     context match {
       case NoArgRunningTestContext(testCase) =>
         descriptionProvider.describeMethod(testCase.method)

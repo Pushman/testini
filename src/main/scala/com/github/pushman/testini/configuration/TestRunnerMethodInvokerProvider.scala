@@ -5,9 +5,9 @@ import com.github.pushman.testini.statements.ParameterisedStatement
 import com.github.pushman.testini.runner.{ParameterisedRunningTestContext, NoArgRunningTestContext, RunningTestContext, TestRunner}
 
 trait TestRunnerMethodInvokerProvider {
-  this: TestRunner with TestSuiteContext =>
+  this: TestCasesProvider =>
 
-  override def methodInvoker(context: RunningTestContext) =
+  def methodInvoker(context: RunningTestContext) =
     context match {
       case NoArgRunningTestContext(testCase) =>
         new InvokeMethod(testCase.method, _: Any)

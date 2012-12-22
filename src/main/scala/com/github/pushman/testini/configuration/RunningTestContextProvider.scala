@@ -7,7 +7,7 @@ import com.github.pushman.testini.testCases.TestCase
 import com.github.pushman.testini.utils.TraversableUtils
 
 trait RunningTestContextProvider {
-  this: RunningTestContextProvider with TestSuiteContext =>
+  this: TestCasesProvider =>
 
   def nextRunningTestContext(method: FrameworkMethod): RunningTestContext =
     testCasesIterator(method).next()
