@@ -4,7 +4,7 @@ import org.springframework.beans.factory.xml.ParserContext
 import org.w3c.dom.Element
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.beans.factory.support.BeanDefinitionBuilder
-import org.springframework.util.StringUtils
+import com.github.pushman.testini.utils.StringOption
 
 object XmlTools {
 
@@ -16,10 +16,7 @@ object XmlTools {
     getProperty(propertyName, element).map(s => s.toBoolean)
 
   def getProperty(propertyName: String, element: Element) =
-    if (StringUtils.hasLength(element.getAttribute(propertyName)))
-      Some(element.getAttribute(propertyName))
-    else
-      None
+    StringOption(element.getAttribute(propertyName))
 
   def setProperty(propertyName: String, propertyValue: Boolean, bean: BeanDefinitionBuilder) {
     bean.addPropertyValue(propertyName, propertyValue)

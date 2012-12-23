@@ -1,20 +1,18 @@
 package com.github.pushman.testini.configuration.providers.spring
 
 import org.junit.runners.model.TestClass
-import com.github.pushman.testini.testCases.providers.spring.SpringTestCasesProvider
-import com.github.pushman.testini.configuration.{TestClassProvider, TestCasesProvider, TestRunnerConfigurationBase}
-import com.github.pushman.testini.testCases.TestCase
+import com.github.pushman.testini.configuration.TestRunnerConfigurationBase
+import com.github.pushman.testini.testCases.ParameterisedTestCasesProvider
 import com.github.pushman.testini.runner.GenericTestiniTestRunner.TestRunnerBuilder
+import com.github.pushman.testini.testKits.providers.spring.SpringTestKitsProvider
 
 object SpringTestRunnerConfiguration extends TestRunnerBuilder {
 
-  def apply(testClass: TestClass) =
-    new SpringTestRunnerConfiguration(testClass)
-}
+  def apply(testClass: TestClass) = {
+    new TestRunnerConfigurationBase(testClass, testCasesProvider(testClass).testCases)
+  }
 
-class SpringTestRunnerConfiguration(testClass: TestClass)
-  extends TestRunnerConfigurationBase(testClass) with TestCasesProvider {
-
-  override def testCases: Iterable[TestCase] =
-    SpringTestCasesProvider(testClass).testCases
+  def testCasesProvider(testClass: TestClass) = {
+    new ParameterisedTestCasesProvider(testClass, new SpringTestKitsProvider(testClass))
+  }
 }
