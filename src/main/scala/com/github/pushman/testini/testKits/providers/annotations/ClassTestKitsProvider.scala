@@ -1,32 +1,24 @@
 package com.github.pushman.testini.testKits.providers.annotations
 
-import com.github.pushman.testini.testKits.TestKitsProvider
+import com.github.pushman.testini.testKits.{TestKit, TestKitsProvider}
 import org.junit.runners.model.FrameworkMethod
 import java.lang.reflect.Method
 import com.github.pushman.testini.utils.methods.{MethodExecutor, MethodFinder}
-import com.github.pushman.testini.Parameterised
 
-case class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor: MethodExecutor)
+abstract class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor: MethodExecutor)
   extends TestKitsProvider {
 
-  def provideTestKits(testMethod: FrameworkMethod) = {
-    def providerMethods = for {
-      annotation <- Option(testMethod.getAnnotation(classOf[Parameterised]))
-      sourceClass <- Option(annotation.source())
-    } yield findProviderMethods(sourceClass)
-
-    def findProviderMethods(clazz: Class[_]): Seq[Method] =
-      methodFinder.findAllProviderMethods(testMethod.getMethod, clazz)
-
-    def execute(providerMethods: Seq[Method]) =
-      for {
-        providerMethod <- providerMethods
-        testKit <- methodExecutor.execute(providerMethod)
-      } yield testKit
-
+  def provideTestKits(testMethod: FrameworkMethod): Option[Seq[TestKit]] = {
     for {
-      providerMethod <- providerMethods
+      sourceClass <- sourceClass(testMethod)
+      providerMethods <- Some(methodFinder.findProviderMethods(testMethod.getMethod, sourceClass))
+      providerMethod <- Some(providerMethods)
       testKit <- Some(execute(providerMethod))
     } yield testKit
   }
+
+  protected def sourceClass(testMethod: FrameworkMethod): Option[Class[_]]
+
+  private def execute(providerMethods: Seq[Method]) =
+    providerMethods.flatMap(methodExecutor.execute)
 }

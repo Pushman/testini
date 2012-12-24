@@ -16,13 +16,10 @@ class ParameterisedTestCasesProvider(testClass: TestClass, testKitsProvider: Tes
     if (Option(method.getMethod.getAnnotation(classOf[Ignore])).isDefined)
       IgnoredTestCase(method)
     else if (Option(method.getMethod.getAnnotation(classOf[Parameterised])).isDefined)
-      ParameterisedTestCase(method, computeTestKits(method).getOrElse(noTestKitsError(method)))
+      ParameterisedTestCase(method, computeTestKits(method))
     else
       NoArgTestCase(method)
 
   private def computeTestKits(method: FrameworkMethod) =
-    testKitsProvider.provideTestKits(method)
-
-  private def noTestKitsError(method: FrameworkMethod) =
-    throw new IllegalArgumentException("Cannot find any TestKits for " + method.getMethod)
+    testKitsProvider.provideTestKits(method).getOrElse(Nil)
 }

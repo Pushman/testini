@@ -1,9 +1,12 @@
 package com.github.pushman.testini.utils
 
+import annotation.tailrec
+
 object TraversableUtils {
 
   implicit def asExtendedSeq[A](a: Seq[A]) = new ExtendedList(a)
 
+  @tailrec
   def findSome[A, B](source: List[A], f: (A) => Option[B]): Option[B] =
     source match {
       case Nil => None
