@@ -5,15 +5,14 @@ import java.util.Collections
 import scala.collection.JavaConversions._
 import com.github.pushman.testini.testCases.TestCase
 
-object TestCaseData {
+object XmlTestCase {
   val TestKits = "testKits"
-  val IsIgnored = "isIgnored"
 }
 
-case class TestCaseData(@BeanProperty var testKits: java.util.List[TestKitData],
-                        @BeanProperty var isIgnored: Boolean) extends TestCase {
+case class XmlTestCase(@BeanProperty var testKits: java.util.List[XmlTestKit],
+                       @BeanProperty var isIgnored: Boolean) extends TestCase {
 
-  def this(testKits: java.util.List[TestKitData]) = this(testKits, false)
+  def this(testKits: java.util.List[XmlTestKit]) = this(testKits, false)
 
   def this() = this(Collections.emptyList())
 

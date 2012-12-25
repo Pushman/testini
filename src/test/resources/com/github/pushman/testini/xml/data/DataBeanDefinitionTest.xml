@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:test="http://pushman.github.com/schema/test"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:test="http://pushman.github.com/schema/test"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://pushman.github.com/schema/test http://pushman.github.com/schema/test.xsd">
 
-    <test:case id="simpleCase">
-        <ref bean="simpleKit"/>
-        <test:kit id="ignoredKit" ignore="true"/>
-    </test:case>
+	<test:case id="simpleCase">
+		<ref bean="simpleKit"/>
+		<test:kit ignore="true"/>
+	</test:case>
 
-    <test:kit id="simpleKit">
-        <value>hello world</value>
-        <bean class="java.util.Locale">
-            <constructor-arg value="pl"/>
-        </bean>
-    </test:kit>
+	<test:kit id="simpleKit">
+		<value>hello world</value>
+		<bean class="java.util.Locale">
+			<constructor-arg value="pl"/>
+		</bean>
+	</test:kit>
 
-    <test:kit id="ignoredKit" ignore="true"/>
+	<test:kit id="ignoredKit" ignore="true"/>
 </beans>

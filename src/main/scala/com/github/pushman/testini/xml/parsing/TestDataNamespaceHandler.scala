@@ -1,4 +1,4 @@
-package com.github.pushman.testini.xml.data
+package com.github.pushman.testini.xml.parsing
 
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport
 

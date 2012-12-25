@@ -5,12 +5,12 @@ import scala.collection.JavaConversions._
 import java.util.Collections
 import com.github.pushman.testini.testKits.TestKit
 
-object TestKitData {
+object XmlTestKit {
   val Data = "kitData"
   val IsIgnored = "isIgnored"
 }
 
-case class TestKitData(@BeanProperty var kitData: java.util.List[_ <: AnyRef], @BeanProperty var isIgnored: Boolean)
+case class XmlTestKit(@BeanProperty var kitData: java.util.List[_ <: AnyRef], @BeanProperty var isIgnored: Boolean)
   extends TestKit {
 
   def this(data: java.util.List[_ <: AnyRef]) = this(data, false)

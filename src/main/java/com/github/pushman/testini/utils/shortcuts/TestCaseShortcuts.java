@@ -2,7 +2,7 @@ package com.github.pushman.testini.utils.shortcuts;
 
 
 import com.github.pushman.testini.testKits.TestKit;
-import com.github.pushman.testini.xml.data.TestKitData;
+import com.github.pushman.testini.xml.data.XmlTestKit;
 
 import java.util.Arrays;
 
@@ -16,10 +16,10 @@ public final class TestCaseShortcuts {
     }
 
     public static TestKit $(Object... data) {
-        return new TestKitData(Arrays.asList(data));
+        return new XmlTestKit(Arrays.asList(data));
     }
 
     public static TestKit $ign(Object... data) {
-        return new TestKitData(Arrays.asList(data), true);
+        return new XmlTestKit(Arrays.asList(data), true);
     }
 }

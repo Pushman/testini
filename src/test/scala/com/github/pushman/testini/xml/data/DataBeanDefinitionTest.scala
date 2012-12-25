@@ -14,7 +14,7 @@ class DataBeanDefinitionTest {
     val expectedEntity = simpleTestKit
 
     // when
-    val entity = loadEntityFromXml("simpleKit", classOf[TestKitData])
+    val entity = loadEntityFromXml("simpleKit", classOf[XmlTestKit])
 
     // then
     assertEquals(expectedEntity, entity)
@@ -26,7 +26,7 @@ class DataBeanDefinitionTest {
     val expectedEntity = ignoredKit
 
     // when
-    val entity: TestKitData = loadEntityFromXml("ignoredKit", classOf[TestKitData])
+    val entity: XmlTestKit = loadEntityFromXml("ignoredKit", classOf[XmlTestKit])
 
     // then
     assertEquals(expectedEntity, entity)
@@ -35,21 +35,21 @@ class DataBeanDefinitionTest {
   @Test
   def shouldCreateSimpleCase() {
     // given
-    val expectedEntity = new TestCaseData(List(simpleTestKit, ignoredKit))
+    val expectedEntity = new XmlTestCase(List(simpleTestKit, ignoredKit))
 
     // when
-    val entity: TestCaseData = loadEntityFromXml("simpleCase", classOf[TestCaseData])
+    val entity: XmlTestCase = loadEntityFromXml("simpleCase", classOf[XmlTestCase])
 
     // then
     assertEquals(expectedEntity, entity)
   }
 
-  private def simpleTestKit: TestKitData = {
-    new TestKitData(List("hello world", new Locale("pl")))
+  private def simpleTestKit: XmlTestKit = {
+    new XmlTestKit(List("hello world", new Locale("pl")))
   }
 
-  private def ignoredKit: TestKitData = {
-    new TestKitData(Collections.emptyList(), true)
+  private def ignoredKit: XmlTestKit = {
+    new XmlTestKit(Collections.emptyList(), true)
   }
 
   private def loadEntityFromXml[T](entityId: String, clazz: Class[T]): T = {
