@@ -12,7 +12,7 @@ abstract class ClassTestKitsProvider(methodFinder: MethodFinder, methodExecutor:
     for {
       sourceClass <- sourceClass(testMethod)
       providerMethods <- Some(methodFinder.findProviderMethods(testMethod.getMethod, sourceClass))
-      providerMethod <- Some(providerMethods)
+      providerMethod <- Some(providerMethods) if !providerMethods.isEmpty
       testKit <- Some(execute(providerMethod))
     } yield testKit
   }
