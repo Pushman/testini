@@ -1,1 +1,1 @@
-http\://pushman.github.com/schema/test=com.github.pushman.testini.xml.parsing.TestDataNamespaceHandler
+http\://pushman.github.com/schema/test=com.github.pushman.testini.xml.parsing.TestNamespaceHandler
