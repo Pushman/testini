@@ -8,7 +8,7 @@
 	<properties>
 		<junit.version>4.10</junit.version>
 		<spring.version>3.1.1.RELEASE</spring.version>
-		<scala.version>2.9.1</scala.version>
+		<scala.version>2.9.2</scala.version>
 		<fest-assert.version>1.4</fest-assert.version>
 		<JUnitParams.version>0.5.0</JUnitParams.version>
 		<guava.version>12.0</guava.version>
@@ -81,6 +81,11 @@
 			<version>${JUnitParams.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>reaktor</groupId>
+			<artifactId>scct_2.9.2</artifactId>
+			<version>0.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -90,14 +95,14 @@
 				<artifactId>maven-scala-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>main-scalac</id>
 						<goals>
 							<goal>compile</goal>
 						</goals>
 						<phase>compile</phase>
 					</execution>
 					<execution>
-						<id>test-compile</id>
+						<id>test-scalac</id>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
@@ -112,6 +117,17 @@
 				</executions>
 				<configuration>
 					<scalaVersion>${scala.version}</scalaVersion>
+					<args>
+						<args>-P:scct:projectId:${project.name}</args>
+						<args>-P:scct:basedir:${project.basedir}</args>
+					</args>
+					<compilerPlugins>
+						<compilerPlugin>
+							<groupId>reaktor</groupId>
+							<artifactId>scct_2.9.2</artifactId>
+							<version>0.2-SNAPSHOT</version>
+						</compilerPlugin>
+					</compilerPlugins>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -131,6 +147,19 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<systemPropertyVariables>
+						<scct.project.name>${project.name}</scct.project.name>
+						<scct.coverage.file>${project.build.outputDirectory}/coverage.data</scct.coverage.file>
+						<scct.report.dir>${project.build.directory}/coverage-report</scct.report.dir>
+						<scct.source.dir>${project.build.sourceDirectory}</scct.source.dir>
+					</systemPropertyVariables>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

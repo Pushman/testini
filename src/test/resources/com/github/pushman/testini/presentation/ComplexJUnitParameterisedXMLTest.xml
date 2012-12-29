@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:test="http://pushman.github.com/schema/test"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://pushman.github.com/schema/test http://pushman.github.com/schema/test.xsd">
+
+	<test:case id="testMultiply">
+		<test:kit>
+			<bean class="com.github.pushman.testini.presentation.Complex">
+				<property name="real" value="0"/>
+				<property name="imaginary" value="0"/>
+			</bean>
+			<value type="int">0</value>
+			<bean class="com.github.pushman.testini.presentation.Complex">
+				<property name="real" value="0"/>
+				<property name="imaginary" value="0"/>
+			</bean>
+		</test:kit>
+
+		<test:kit>
+			<bean class="com.github.pushman.testini.presentation.Complex">
+				<property name="real" value="1"/>
+				<property name="imaginary" value="-2"/>
+			</bean>
+			<value type="int">2</value>
+			<bean class="com.github.pushman.testini.presentation.Complex">
+				<property name="real" value="2"/>
+				<property name="imaginary" value="-4"/>
+			</bean>
+		</test:kit>
+	</test:case>
+
+</beans>

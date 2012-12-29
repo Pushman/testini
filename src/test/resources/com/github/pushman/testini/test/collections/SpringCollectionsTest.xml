@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:test="http://pushman.github.com/schema/test"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:test="http://pushman.github.com/schema/test"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
        http://pushman.github.com/schema/test http://pushman.github.com/schema/test.xsd">
 
-    <util:list id="sampleList" scope="prototype">
-        <value>a</value>
-        <value>b</value>
-    </util:list>
+	<util:list id="collection" scope="prototype">
+		<value>a</value>
+		<value>b</value>
+	</util:list>
 
-    <test:case id="shouldReturnCollectionSize">
-        <test:kit>
-            <util:set/>
-            <value type="java.lang.Integer">0</value>
-        </test:kit>
-        <test:kit>
-            <ref bean="sampleList"/>
-            <value type="java.lang.Integer">2</value>
-        </test:kit>
-    </test:case>
+	<test:case id="shouldAddAllToCollection">
+		<test:kit>
+			<ref bean="collection"/>
+			<util:list>
+				<value>c</value>
+				<value>d</value>
+			</util:list>
+			<util:list>
+				<value>a</value>
+				<value>b</value>
+				<value>c</value>
+				<value>d</value>
+			</util:list>
+		</test:kit>
+		<test:kit>
+			<ref bean="collection"/>
+			<util:list>
+				<value>e</value>
+			</util:list>
+			<util:list>
+				<value>a</value>
+				<value>b</value>
+				<value>e</value>
+			</util:list>
+		</test:kit>
+	</test:case>
 
-    <test:case id="shouldAddAllToCollection">
-        <test:kit parent="shouldAddAllToCollectionKitBase">
-            <ref bean="sampleList"/>
-            <util:list>
-                <value>c</value>
-                <value>d</value>
-            </util:list>
-            <util:list>
-                <value>a</value>
-                <value>b</value>
-                <value>c</value>
-                <value>d</value>
-            </util:list>
-        </test:kit>
-        <test:kit>
-            <ref bean="sampleList"/>
-            <util:list>
-                <value>e</value>
-            </util:list>
-            <util:list>
-                <value>a</value>
-                <value>b</value>
-                <value>e</value>
-            </util:list>
-        </test:kit>
-    </test:case>
+
+	<test:case id="shouldReturnCollectionSize">
+		<test:kit>
+			<util:set/>
+			<value type="java.lang.Integer">0</value>
+		</test:kit>
+		<test:kit>
+			<ref bean="collection"/>
+			<value type="java.lang.Integer">2</value>
+		</test:kit>
+	</test:case>
 
 </beans>

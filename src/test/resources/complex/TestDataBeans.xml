@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="testMultiply" class="com.github.pushman.testini.xml.data.XmlTestCase">
+		<property name="testKits">
+			<util:list>
+				<bean class="com.github.pushman.testini.xml.data.XmlTestKit">
+					<property name="kitData">
+						<util:list>
+							<bean class="com.github.pushman.testini.presentation.Complex">
+								<property name="real" value="0"/>
+								<property name="imaginary" value="0"/>
+							</bean>
+							<value type="int">0</value>
+							<bean class="com.github.pushman.testini.presentation.Complex">
+								<property name="real" value="0"/>
+								<property name="imaginary" value="0"/>
+							</bean>
+						</util:list>
+					</property>
+				</bean>
+				<bean class="com.github.pushman.testini.xml.data.XmlTestKit">
+					<property name="kitData">
+						<util:list>
+							<bean class="com.github.pushman.testini.presentation.Complex">
+								<property name="real" value="0"/>
+								<property name="imaginary" value="0"/>
+							</bean>
+							<value type="int">999</value>
+							<bean class="com.github.pushman.testini.presentation.Complex">
+								<property name="real" value="999"/>
+								<property name="imaginary" value="999"/>
+							</bean>
+						</util:list>
+					</property>
+					<property name="isIgnored" value="true"/>
+				</bean>
+			</util:list>
+		</property>
+	</bean>
+</beans>

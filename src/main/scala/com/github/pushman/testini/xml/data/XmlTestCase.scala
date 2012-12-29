@@ -9,10 +9,7 @@ object XmlTestCase {
   val TestKits = "testKits"
 }
 
-case class XmlTestCase(@BeanProperty var testKits: java.util.List[XmlTestKit],
-                       @BeanProperty var isIgnored: Boolean) extends TestCase {
-
-  def this(testKits: java.util.List[XmlTestKit]) = this(testKits, false)
+case class XmlTestCase(@BeanProperty var testKits: java.util.List[XmlTestKit]) extends TestCase {
 
   def this() = this(Collections.emptyList())
 
@@ -21,4 +18,6 @@ case class XmlTestCase(@BeanProperty var testKits: java.util.List[XmlTestKit],
   def method = null
 
   def isParameterised = true
+
+  def isIgnored = false
 }
